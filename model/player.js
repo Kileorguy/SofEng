@@ -14,23 +14,20 @@ export class Player extends Entity{
         ctx.fillStyle = 'blue'
         ctx.fillRect(this.x,this.y,this.width,this.height)
 
+        ctx.fillStyle = 'gray'
         if(this.facing ==='a'){
-            ctx.fillStyle = 'gray'
             let atkX = this.x-this.atkW;
             let atkY = this.y;
             ctx.fillRect(atkX, atkY, this.atkW,this.atkH)
         }else if(this.facing ==='d'){
-            ctx.fillStyle = 'gray'
             let atkX = this.x+this.width;
             let atkY = this.y;
             ctx.fillRect(atkX, atkY, this.atkW,this.atkH)
         }else if(this.facing ==='w'){
-            ctx.fillStyle = 'gray'
             let atkX = this.x
             let atkY = this.y-this.atkW
             ctx.fillRect(atkX, atkY,this.atkH,this.atkW)
         }else if(this.facing ==='s'){
-            ctx.fillStyle = 'gray'
             let atkX = this.x
             let atkY = this.y+this.height
             ctx.fillRect(atkX, atkY,this.atkH,this.atkW)
@@ -38,7 +35,6 @@ export class Player extends Entity{
     }
      horizontalCollision(x){
         let width = this.width
-         console.log(Game.canvasWidth)
         return x <= 0  || x >=  Game.canvasWidth - width;
 
     }

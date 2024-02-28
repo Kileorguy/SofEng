@@ -37,6 +37,7 @@ export class Game {
     moveLogic(){
         this.enemy.drawSelf(this.ctx)
 
+
         this.player.move()
         this.player.drawSelf(this.ctx)
 
@@ -50,6 +51,7 @@ export class Game {
             this.then = this.now - (this.elapsed % this.fpsInterval)
             clearCanvas(this.ctx)
             this.moveLogic()
+            this.enemy.state.updateState()
         }
         requestAnimationFrame(this.render.bind(this))
     }

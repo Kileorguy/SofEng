@@ -9,9 +9,7 @@ const cvsWidth = canvas.offsetWidth
 const cvsHeight = canvas.offsetHeight
 
 window.onload = () =>{
-    init()
     startGame()
-    console.log(cvsWidth, cvsHeight)
 }
 
 // function initEntities(){
@@ -32,12 +30,12 @@ function startGame(){
     game.enemy = new Enemy(300,cvsWidth/5,cvsHeight/2, 150,150)
 
     game.setFPS()
+    game.enemy.state.startState()
     game.render()
 
     let key
     let keydown = false
     const moveSpeed = 8
-
 
     document.addEventListener('keydown', function(event) {
         key = event.key;
@@ -102,12 +100,6 @@ function startGame(){
             }
         }
     });
-}
-
-function init() {
-    // setFramePerSecond()
-    // initEntities()
-    // startGame()
 }
 
 
