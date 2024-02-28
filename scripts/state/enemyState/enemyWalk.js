@@ -14,7 +14,7 @@ export class EnemyWalk extends State{
         this.Enemy= Enemy
     }
 
-    moveEuclidean(){
+    moveManhattan(){
         let x,y
         x = this.Enemy.x
         y = this.Enemy.y
@@ -60,7 +60,7 @@ export class EnemyWalk extends State{
 
         this._currentTime = performance.now();
         this._deltaTime = (this._currentTime - this._previousTime) / 1000;
-        this.moveEuclidean()
+        this.moveManhattan()
 
         let distX = Math.abs(this._destX - this.Enemy.x)
         let distY = Math.abs(this._destY - this.Enemy.y)

@@ -1,5 +1,6 @@
 import {State} from "../state.js";
 import {EnemyWalk} from "./enemyWalk.js";
+import {EnemyMagic} from "./enemyMagic.js";
 
 export class EnemyIdle extends State{
     _timer
@@ -14,7 +15,7 @@ export class EnemyIdle extends State{
     startState(){
         this._previousTime = performance.now()
         this._currentTime = performance.now()
-        this._timer = Math.random()*3+3
+        this._timer = Math.random()*2+1
         this.change = () =>{this.changeState()}
 
     }
@@ -26,8 +27,18 @@ export class EnemyIdle extends State{
         }
     }
     changeState(){
-        this.Enemy.state = new EnemyWalk(this.Enemy)
+        let rand = Math.round(Math.random())+1
+        console.log(rand)
+
+        if(rand===1){
+            this.Enemy.state = new EnemyWalk(this.Enemy)
+        }else if(rand === 2){
+            this.Enemy.state = new EnemyMagic(this.Enemy)
+        }
+
+
         this.Enemy.state.startState()
+
     }
 
 
