@@ -1,61 +1,114 @@
 import {Enemy} from '../../model/enemy.js'
-import {Monkey} from '../../model/monkey.js'
 import {Player} from '../../model/player.js'
-import {move} from "../../scripts/playerMovement.js";
+import {Game} from "../../scripts/gameLogic.js";
 
 const canvas = document.getElementById("canvas");
-export const ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d");
 
-export const cvsWidth = canvas.offsetWidth
-export const cvsHeight = canvas.offsetHeight
+const cvsWidth = canvas.offsetWidth
+const cvsHeight = canvas.offsetHeight
 
 window.onload = () =>{
     init()
+    startGame()
     console.log(cvsWidth, cvsHeight)
 }
 
-function clearCanvas(){
-    ctx.fillStyle = "white"
-    ctx.fillRect(0,0,cvsWidth,cvsHeight)
-}
+// function initEntities(){
+//     player = new Player(100,cvsWidth/2,cvsHeight/2, 100,100,80,100)
+//     enemy = new Enemy(300,cvsWidth/4,cvsHeight/2, 150,150)
+// }
 
-let frameCount =0
-let fps, fpsInterval, startTime, now, then, elapsed;
+function startGame(){
+    // kurang lebih ini buat init init variable gamenya
+    const game = Game.getInstance()
+    game.start = true
 
-function setFramePerSecond(){
-    fps = 60
-    fpsInterval = 1000 / fps;
-    then = Date.now();
-    startTime = then;
-}
+    Game.canvasWidth = cvsWidth
+    Game.canvasHeight = cvsHeight
 
-export let enemy
-export let player
+    game.ctx = ctx
+    game.player = new Player(100,cvsWidth/2,cvsHeight/2,100,100,80,100)
+    game.enemy = new Enemy(300,cvsWidth/5,cvsHeight/2, 150,150)
 
-function initEntities(){
-    player = new Player(100,cvsWidth/2,cvsHeight/2, 100,100,80,100)
-    enemy = new Enemy(300,cvsWidth/4,cvsHeight/2, 150,150)
+    game.setFPS()
+    game.render()
+
+    let key
+    let keydown = false
+    const moveSpeed = 8
+
+
+    document.addEventListener('keydown', function(event) {
+        key = event.key;
+        key = key.toLowerCase()
+        switch (key) {
+            case 'a':{
+                game.player.facing = key
+                game.player.vx = -moveSpeed
+                keydown = true
+                break
+            }
+            case 'd':{
+                game.player.facing = key
+                game.player.vx = moveSpeed
+                keydown = true
+                break
+            }
+            case 'w':{
+                game.player.facing = key
+                game.player.vy = -moveSpeed
+                keydown = true
+                break
+            }
+            case 's':{
+                game.player.facing = key
+                game.player.vy = moveSpeed
+
+                keydown = true
+                break
+            }
+        }
+    });
+
+    document.addEventListener('keyup', function(event) {
+        key = event.key;
+        key = key.toLowerCase()
+        switch (key) {
+            case 'a':{
+                if(game.player.vx === -moveSpeed){
+                    game.player.vx = 0
+                }
+                break
+            }
+            case 'd':{
+
+                if(game.player.vx === moveSpeed){
+                    game.player.vx = 0
+                }
+                break
+            }
+            case 'w':{
+                if(game.player.vy === -moveSpeed){
+                    game.player.vy = 0
+                }
+                break
+            }
+            case 's':{
+                if(game.player.vy === moveSpeed){
+                    game.player.vy = 0
+                }
+                break
+            }
+        }
+    });
 }
 
 function init() {
-    setFramePerSecond()
-    initEntities()
-    clearCanvas()
-    startGame()
+    // setFramePerSecond()
+    // initEntities()
+    // startGame()
 }
 
-function startGame(){
-    now = Date.now()
-    elapsed = now - then
 
-    if(elapsed > fpsInterval){
-        then = now - (elapsed % fpsInterval)
 
-        move()
-        clearCanvas()
-        enemy.drawSelf()
-        player.drawSelf()
-
-    }
-    requestAnimationFrame(startGame)
-}
