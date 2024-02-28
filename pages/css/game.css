@@ -20,9 +20,7 @@ body{
 }
 
 #canvas{
-    width: 1440px;
-    height: 810px;
-    border: 5px solid white;
+    border: 5px solid black;
 }
 .outerGame{
     z-index: 5;
