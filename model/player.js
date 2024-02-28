@@ -1,4 +1,7 @@
-class Player extends entity{
+import {Entity} from "./entity.js";
+import {ctx} from "../pages/js/game.js";
+
+export class Player extends Entity{
     constructor(HP,x,y,width,height,atkW,atkH) {
         super(HP,x,y,width,height);
         this.atkW = atkW

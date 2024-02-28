@@ -1,13 +1,14 @@
-// export default function Game() {
-//
-// }
+import {Enemy} from '../../model/enemy.js'
+import {Monkey} from '../../model/monkey.js'
+import {Player} from '../../model/player.js'
+import {move} from "../../scripts/playerMovement.js";
 
 const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+export const ctx = canvas.getContext("2d");
 
-const cvsWidth = canvas.offsetWidth
-const cvsHeight = canvas.offsetHeight
-document.addEventListener("keydown", ()=>{});
+export const cvsWidth = canvas.offsetWidth
+export const cvsHeight = canvas.offsetHeight
+
 window.onload = () =>{
     init()
     console.log(cvsWidth, cvsHeight)
@@ -28,8 +29,8 @@ function setFramePerSecond(){
     startTime = then;
 }
 
-let enemy
-let player
+export let enemy
+export let player
 
 function initEntities(){
     player = new Player(100,cvsWidth/2,cvsHeight/2, 100,100,80,100)

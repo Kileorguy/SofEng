@@ -1,8 +1,8 @@
-
-function testDrawPlayer(){
-    ctx.fillStyle = "red"
-    ctx.fillRect(player.x,player.y,player.width,player.height)
-}
+import {cvsHeight, cvsWidth, player} from "../pages/js/game.js";
+// function testDrawPlayer(){
+//     ctx.fillStyle = "red"
+//     ctx.fillRect(player.x,player.y,player.width,player.height)
+// }
 
 let key
 let vx =0
@@ -82,7 +82,7 @@ function verticalCollision(y){
     return y <= 0 || y >= cvsHeight - height;
 
 }
-function move(){
+export function move(){
 
     if(!horizontalCollision(player.x+vx)){
         player.x += vx
