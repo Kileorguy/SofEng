@@ -1,3 +1,7 @@
+// export default function Game() {
+//
+// }
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -14,15 +18,43 @@ function clearCanvas(){
     ctx.fillRect(0,0,cvsWidth,cvsHeight)
 }
 
-function init() {
-    initPlayer(100,cvsWidth/2,cvsHeight/2, 100,100)
-    clearCanvas()
-    draw()
+let frameCount =0
+let fps, fpsInterval, startTime, now, then, elapsed;
+
+function setFramePerSecond(){
+    fps = 60
+    fpsInterval = 1000 / fps;
+    then = Date.now();
+    startTime = then;
 }
 
-function draw(){
+let enemy
+let player
+
+function initEntities(){
+    player = new Player(100,cvsWidth/2,cvsHeight/2, 100,100,80,100)
+    enemy = new Enemy(300,cvsWidth/4,cvsHeight/2, 150,150)
+}
+
+function init() {
+    setFramePerSecond()
+    initEntities()
     clearCanvas()
-    move()
-    player.drawSelf()
-    requestAnimationFrame(draw)
+    startGame()
+}
+
+function startGame(){
+    now = Date.now()
+    elapsed = now - then
+
+    if(elapsed > fpsInterval){
+        then = now - (elapsed % fpsInterval)
+
+        move()
+        clearCanvas()
+        enemy.drawSelf()
+        player.drawSelf()
+
+    }
+    requestAnimationFrame(startGame)
 }

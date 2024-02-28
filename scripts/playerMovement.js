@@ -14,21 +14,25 @@ document.addEventListener('keydown', function(event) {
     key = key.toLowerCase()
     switch (key) {
         case 'a':{
+            player.facing = key
             vx = -moveSpeed
             keydown = true
             break
         }
         case 'd':{
+            player.facing = key
             vx = moveSpeed
             keydown = true
             break
         }
         case 'w':{
+            player.facing = key
             vy = -moveSpeed
             keydown = true
             break
         }
         case 's':{
+            player.facing = key
             vy =moveSpeed
             keydown = true
             break
