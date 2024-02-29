@@ -1,7 +1,6 @@
 import {Enemy} from '../../model/enemy.js'
 import {Player} from '../../model/player.js'
 import {Game} from "../../scripts/gameLogic.js";
-import {Magic} from "../../model/magic.js";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -34,12 +33,12 @@ function startGame(){
     game.enemy.state.startState()
     game.render()
 
-    game.magics.push(new Magic(500,200))
-    game.magics.push(new Magic(400,300))
-    game.magics.push(new Magic(200,400))
-    game.magics.push(new Magic(100,500))
-    game.magics.push(new Magic(300,100))
-    game.magics.push(new Magic(150,200))
+    // game.magics.push(new Magic(500,200))
+    // game.magics.push(new Magic(400,300))
+    // game.magics.push(new Magic(200,400))
+    // game.magics.push(new Magic(100,500))
+    // game.magics.push(new Magic(300,100))
+    // game.magics.push(new Magic(150,200))
 
 
     let key

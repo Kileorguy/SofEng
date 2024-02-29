@@ -7,20 +7,17 @@ import {Magic} from "../model/magic.js";
 export class Game {
     static START = false
     static gameInstance
-    static ctx
-
+    player
+    enemy
+    static canvasWidth
+    static canvasHeight
+    ctx
     static getInstance = () =>{
         if(this.gameInstance == null){
             this.gameInstance = new Game()
         }
         return this.gameInstance
     }
-    player
-    enemy
-    static canvasWidth
-    static canvasHeight
-    ctx
-
     constructor() {
     }
     fps
@@ -42,7 +39,6 @@ export class Game {
 
     moveLogic(){
         this.enemy.drawSelf(this.ctx)
-
 
         this.player.move()
         this.player.drawSelf(this.ctx)

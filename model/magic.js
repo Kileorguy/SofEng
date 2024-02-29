@@ -21,14 +21,16 @@ export class Magic {
     }
 
     move(){
-        this.px = this.player.x + this.player.width/2
-        this.py = this.player.y + this.player.height/2
         this._currentTime = performance.now();
         this._deltaTime = (this._currentTime - this._previousTime) / 1000;
+        // console.log(this._deltaTime)
+        if(this._deltaTime < 0.5 ) return
+        this.px = this.player.x + this.player.width/2
+        this.py = this.player.y + this.player.height/2
         // let radians = Math.atan2(this.py - this.y, this.px - this.x);
         // let angle = radians * (180 / Math.PI)
         // console.log("testttt",angle)
-        if(this._deltaTime<this._timer){
+        if(this._deltaTime<this._timer+0.5){
             this._radian = Math.atan2(this.py - this.y, this.px - this.x);
             // console.log("test")
         }
