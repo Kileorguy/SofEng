@@ -1,5 +1,6 @@
 import {clearCanvas} from "../helper/canvasHelper.js";
 import {Magic} from "../model/magic.js";
+import {FactorySingleton} from "./singleton/allFactorySingleton.js";
 
 
 // script isi logic game (start game, dst)
@@ -8,10 +9,10 @@ export class Game {
     static START = false
     static #gameInstance
     player
-    enemy
     static canvasWidth
     static canvasHeight
     ctx
+    enemy
     static getInstance = () =>{
         if(this.#gameInstance == null){
             this.#gameInstance = new Game()
@@ -19,6 +20,7 @@ export class Game {
         return this.#gameInstance
     }
     constructor() {
+        this.fact = FactorySingleton.getInstance()
     }
     fps
     fpsInterval
@@ -26,6 +28,7 @@ export class Game {
     startTime
     elapsed
     magics = []
+    monkeys = []
     setFPS(){
         this.fps = 60
         this.fpsInterval = 1000 / this.fps;
@@ -36,11 +39,15 @@ export class Game {
     initMagic(x,y){
         this.magics.push(new Magic(x,y))
     }
+    initMonkey(x,y){
+        this.monkeys.push(this.fact.monkeyFact.createEntity(x,y))
+    }
 
     moveLogic(){
         this.enemy.drawSelf(this.ctx)
 
         this.player.move()
+        this.player.state.updateState()
         this.player.drawSelf(this.ctx)
 
         // console.log(this.magics.length)
@@ -52,11 +59,20 @@ export class Game {
                 this.magics.splice(index,1)
             }
         })
+        this.monkeys.forEach((m,index)=>{
+            m.move()
+            m.drawSelf(this.ctx)
+            if(m.deathTimer()) this.monkeys.splice(index,1)
+        })
     }
-
-    render(){
+    lastTimestamp = 0;
+    render(timestamp){
+        let deltaTime = (timestamp - this.lastTimestamp) / 16;
+        this.lastTimestamp = timestamp;
+        // console.log(deltaTime)
         this.now = Date.now()
         this.elapsed = this.now - this.then
+        // console.log(this.elapsed)
         if(this.elapsed > this.fpsInterval){
             this.then = this.now - (this.elapsed % this.fpsInterval)
             clearCanvas(this.ctx)
@@ -65,5 +81,6 @@ export class Game {
         }
         requestAnimationFrame(this.render.bind(this))
     }
+
 
 }

@@ -27,21 +27,21 @@ export class EnemyWalk extends State{
 
         if(x < this.#_destX){
             if(distX > 10 ){
-                this.Enemy.x += Math.round(this.Enemy.vx * this.#_deltaTime)
+                this.Enemy.x += Math.round(this.Enemy.vx)
             }
         }else{
             if(distX > 10 ){
-                this.Enemy.x -= Math.round(this.Enemy.vx * this.#_deltaTime)
+                this.Enemy.x -= Math.round(this.Enemy.vx)
             }
         }
         //
         if(y < this.#_destY){
             if(distY > 10){
-                this.Enemy.y += Math.round(this.Enemy.vx * this.#_deltaTime)
+                this.Enemy.y += Math.round(this.Enemy.vx)
             }
         }else{
             if(distY > 10){
-                this.Enemy.y -= Math.round(this.Enemy.vx * this.#_deltaTime)
+                this.Enemy.y -= Math.round(this.Enemy.vx)
             }
         }
 

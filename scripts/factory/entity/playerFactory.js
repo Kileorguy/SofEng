@@ -7,6 +7,12 @@ export class PlayerFactory extends EntityFactory{
         super();
     }
 
+    /**
+     *
+     * @param x : number
+     * @param y : number
+     * @returns {Player}
+     */
     createEntity(x,y){
         // super.createEntity();
         return new Player(100,x,y,100,100,80,100)

@@ -3,6 +3,10 @@ import {PlayerDefault} from "./playerDefault.js";
 
 export class PlayerAttack extends State{
 
+    /**
+     *
+     * @param player : Player
+     */
     constructor(player) {
         super();
         this.player = player

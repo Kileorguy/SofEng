@@ -1,6 +1,7 @@
 import {Entity} from "./entity.js";
 import {Game} from "../scripts/gameLogic.js";
 import {PlayerDefault} from "../scripts/state/playerState/playerDefault.js";
+import {horizontalCollision, verticalCollision} from "../helper/distanceHelper.js";
 
 export class Player extends Entity{
     movementSpeed = 8
@@ -8,6 +9,17 @@ export class Player extends Entity{
     #framesHold = 6
     #framesCurr = 0
     #framesMax = 3
+
+    /**
+     *
+     * @param HP : number
+     * @param x : number
+     * @param y : number
+     * @param width : number
+     * @param height : number
+     * @param atkW : number
+     * @param atkH : number
+     */
     constructor(HP,x,y,width,height,atkW,atkH) {
         super(HP,x,y,width,height);
         this.atkW = atkW
@@ -18,23 +30,34 @@ export class Player extends Entity{
         this.vy =0
         this.vx =0
         this.#framesCurr = 0
-
+        this.dash = false
+        this.block = false
+        this.game = Game.getInstance()
     }
     attack(){
         this.attacking = true
-        setTimeout(function(){
-            this.attacking = false;
-            console.log("hehe")
-        }.bind(this),500)
     }
+
+    /**
+     *
+     * @param dmg : number
+     */
+    takeDamage(dmg){
+        if(this.block || this.dash) return
+        this.HP -= dmg
+    }
+
+
     interval
     drawSelf(ctx){
-
+        console.log(this.HP)
         if(this.attacking && this.#framesCurr === 2){
             this.attacking = false
             this.#framesCurr=0
+            this.#framesElapsed=0
         }
-        console.log(this.attacking)
+
+        // console.log(this.attacking)
         ctx.fillStyle = 'blue'
         ctx.fillRect(this.x,this.y,this.width,this.height)
 
@@ -44,7 +67,7 @@ export class Player extends Entity{
 
         if(this.#framesElapsed % this.#framesHold === 0){
 
-            console.log(this.#framesElapsed,this.#framesCurr,this.#framesMax-1,this.#framesHold)
+            // console.log(this.#framesElapsed,this.#framesCurr,this.#framesMax-1,this.#framesHold)
             if(this.#framesCurr < this.#framesMax - 1){
                 this.#framesCurr+=1
             }else{
@@ -52,6 +75,7 @@ export class Player extends Entity{
             }
         }
         ctx.fillStyle = 'gray'
+
         if(this.facing ==='a'){
             let atkX = this.x-this.atkW;
             let atkY = this.y;
@@ -71,20 +95,12 @@ export class Player extends Entity{
         }
 
     }
-     horizontalCollision(x){
-        let width = this.width
-        return x <= 0  || x >=  Game.canvasWidth - width;
-
-    }
-     verticalCollision(y){
-        let height = this.height
-        return y <= 0 || y >= Game.canvasHeight - height;
-    }
      move(){
-        if(!this.horizontalCollision(this.x+this.vx)){
+        if(this.dash || this.block) return
+        if(!horizontalCollision(this.x+this.vx,this.width)){
             this.x += this.vx
         }
-        if(!this.verticalCollision(this.y+this.vy)){
+        if(!verticalCollision(this.y+this.vy,this.height)){
             this.y  += this.vy
         }
     }

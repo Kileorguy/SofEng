@@ -6,9 +6,9 @@ export class MonkeyFactory extends EntityFactory{
     constructor() {
         super();
     }
-    createEntity() {
+    createEntity(x,y) {
         // super.createEntity();
-        return new Monkey()
+        return new Monkey(100,x,y,50,50)
     }
 
 }

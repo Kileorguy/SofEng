@@ -3,12 +3,17 @@ import {Game} from "../scripts/gameLogic.js";
 export class Magic {
     v = 15
     _radius = 20
-    _deltaTime
-    _previousTime
-    _currentTime
-    _timer = 1
-    _radian = 0
+    #deltaTime
+    #previousTime
+    #currentTime
+    #timer = 0.8
+    #radian = 0
 
+    /**
+     *
+     * @param x : number
+     * @param y : number
+     */
     constructor(x,y) {
         let game = Game.getInstance()
         this.x = x
@@ -16,26 +21,24 @@ export class Magic {
         this.player = game.player
         this.px = this.player.x + this.player.width/2
         this.py = this.player.y + this.player.height/2
-        this._previousTime = performance.now()
-        this._currentTime = performance.now()
+        this.#previousTime = performance.now()
+        this.#currentTime = performance.now()
     }
 
     move(){
-        this._currentTime = performance.now();
-        this._deltaTime = (this._currentTime - this._previousTime) / 1000;
-        // console.log(this._deltaTime)
-        if(this._deltaTime < 0.5 ) return
+        this.#currentTime = performance.now();
+        this.#deltaTime = (this.#currentTime - this.#previousTime) / 1000;
+        if(this.#deltaTime < 0.5 ) return
+
         this.px = this.player.x + this.player.width/2
         this.py = this.player.y + this.player.height/2
-        // let radians = Math.atan2(this.py - this.y, this.px - this.x);
-        // let angle = radians * (180 / Math.PI)
-        // console.log("testttt",angle)
-        if(this._deltaTime<this._timer+0.5){
-            this._radian = Math.atan2(this.py - this.y, this.px - this.x);
-            // console.log("test")
+
+        if(this.#deltaTime<this.#timer+0.5){
+            this.#radian = Math.atan2(this.py - this.y, this.px - this.x);
         }
-        this.x += this.v*this._deltaTime*Math.cos(this._radian)
-        this.y += this.v*this._deltaTime*Math.sin(this._radian)
+
+        this.x += this.v*Math.cos(this.#radian)
+        this.y += this.v*Math.sin(this.#radian)
 
     }
 
@@ -46,7 +49,7 @@ export class Magic {
         let p = this.player
         if(x+this._radius >= p.x && x <= p.x+this._radius + p.width
             && y+this._radius >= p.y && y-this._radius <= p.y + p.height){
-            p.HP -= 10
+            p.takeDamage(5)
 
             return true
         }

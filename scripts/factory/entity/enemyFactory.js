@@ -8,6 +8,12 @@ export class EnemyFactory extends EntityFactory{
     }
 
     // game.player = new Player(100,cvsWidth/2,cvsHeight/2,100,100,80,100)
+    /**
+     *
+     * @param x : number
+     * @param y : number
+     * @returns {Enemy} : Enemy
+     */
     createEntity(x,y){
         // super.createEntity();
         // return new Enemy(300, cvsWidth / 5, cvsHeight / 2, 150, 150)

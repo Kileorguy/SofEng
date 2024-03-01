@@ -1,0 +1,26 @@
+import {State} from "../state.js";
+import {PlayerDefault} from "./playerDefault.js";
+
+export class PlayerBlock extends State{
+    #counter = 0
+    constructor(player) {
+        super();
+        this.player = player
+    }
+
+    startState() {
+        this.player.block = true
+
+    }
+    changeState() {
+        this.player.block = false
+        this.player.state = new PlayerDefault(this.player)
+        this.player.state.startState()
+
+    }
+    updateState() {
+        this.#counter++
+        if(this.#counter>=60*0.5) this.changeState()
+    }
+
+}

@@ -28,9 +28,13 @@ function startGame(){
     game.ctx = ctx
     game.player = f.playerFact.createEntity(cvsWidth/2,cvsHeight/2)
     game.player.state.startState()
+
     game.enemy = f.enemyFact.createEntity(cvsWidth/5, cvsHeight/2)
     game.setFPS()
     game.enemy.state.startState()
+
+    game.monkeys.push(f.monkeyFact.createEntity(0,450))
+
     game.render()
 
     // game.magics.push(new Magic(150,200))
