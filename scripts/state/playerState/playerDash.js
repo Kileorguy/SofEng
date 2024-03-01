@@ -14,7 +14,7 @@ export class PlayerDash extends State {
         player.dash = true
         super();
         this.player = player
-        this.#multiplier = 2
+        this.#multiplier = 3
         this.v = 0
     }
     startState(){
@@ -43,7 +43,7 @@ export class PlayerDash extends State {
             this.player.y += v
         }
 
-        if(this.#timer >= 60*0.2){
+        if(this.#timer >= 60*0.13){
             this.changeState(new PlayerDefault(this.player))
         }
     }

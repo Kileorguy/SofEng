@@ -33,8 +33,6 @@ function startGame(){
     game.setFPS()
     game.enemy.state.startState()
 
-    game.monkeys.push(f.monkeyFact.createEntity(0,450))
-
     game.render()
 
     // game.magics.push(new Magic(150,200))

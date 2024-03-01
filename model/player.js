@@ -21,6 +21,9 @@ export class Player extends Entity{
     #block_cooldown = 5
     #block_counter = 0
 
+    #atk_cooldown = 0.5
+    #atk_counter = 0
+
     /**
      *
      * @param HP : number
@@ -90,8 +93,10 @@ export class Player extends Entity{
             case 'q':{
                 // this.attacking = true
                 // setInterval(this.attacking=false,1000)
-
-                this.state.changeState(new PlayerAttack(this))
+                if(cooldownValidation(this.#atk_counter, this.#atk_cooldown)){
+                    this.state.changeState(new PlayerAttack(this))
+                    this.#atk_counter = 0
+                }
                 break
             }
             case 'w':{
@@ -171,7 +176,9 @@ export class Player extends Entity{
         }
 
         // console.log(this.attacking)
-        ctx.fillStyle = 'blue'
+
+        if(!this.block) ctx.fillStyle = 'blue'
+        else ctx.fillStyle = 'cyan'
         ctx.fillRect(this.x,this.y,this.width,this.height)
 
         if(this.attacking === false) return
@@ -209,17 +216,17 @@ export class Player extends Entity{
 
     }
      move(){
-        this.#dash_counter++
-         this.#block_counter++
+
+        this.#dash_counter++; this.#block_counter++; this.#atk_counter++
         if(this.dash || this.block || this.summon) return
          // priority facing
         let vx = this.vx
         let vy = this.vy
-        if(vx!==0 && vy===0){
+        if(vx!==0 && vy===0 && !this.attacking){
             if (vx>0) this.facing = 'd'
             else this.facing = 'a'
         }
-         if(vx===0 && vy!==0){
+         if(vx===0 && vy!==0 && !this.attacking){
              if (vy>0) this.facing = 's'
              else this.facing = 'w'
          }
