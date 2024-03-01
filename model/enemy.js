@@ -3,6 +3,7 @@ import {EnemyIdle} from "../scripts/state/enemyState/enemyIdle.js";
 
 export class Enemy extends Entity{
     state
+
     constructor(HP,x,y,width,height) {
         super(HP,x,y,width,height);
         this.state = new EnemyIdle(this)

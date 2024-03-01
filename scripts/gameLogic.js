@@ -6,17 +6,17 @@ import {Magic} from "../model/magic.js";
 
 export class Game {
     static START = false
-    static gameInstance
+    static #gameInstance
     player
     enemy
     static canvasWidth
     static canvasHeight
     ctx
     static getInstance = () =>{
-        if(this.gameInstance == null){
-            this.gameInstance = new Game()
+        if(this.#gameInstance == null){
+            this.#gameInstance = new Game()
         }
-        return this.gameInstance
+        return this.#gameInstance
     }
     constructor() {
     }
