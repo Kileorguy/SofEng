@@ -2,6 +2,10 @@ import {Entity} from "./entity.js";
 import {Game} from "../scripts/gameLogic.js";
 import {PlayerDefault} from "../scripts/state/playerState/playerDefault.js";
 import {horizontalCollision, verticalCollision} from "../helper/distanceHelper.js";
+import {PlayerAttack} from "../scripts/state/playerState/playerAttack.js";
+import {PlayerDash} from "../scripts/state/playerState/playerDash.js";
+import {PlayerSummon} from "../scripts/state/playerState/playerSummon.js";
+import {PlayerBlock} from "../scripts/state/playerState/playerBlock.js";
 
 export class Player extends Entity{
     movementSpeed = 8
@@ -32,7 +36,101 @@ export class Player extends Entity{
         this.#framesCurr = 0
         this.dash = false
         this.block = false
+        this.summon = false
         this.game = Game.getInstance()
+        this.keydownListener = this.keydownListener.bind(this);
+        this.keyupListener = this.keyupListener.bind(this);
+        document.addEventListener('keydown', this.keydownListener);
+        document.addEventListener('keyup', this.keyupListener);
+    }
+
+    keydownListener(event) {
+        let atk = this.attacking
+        let dash = this.dash
+        let summon = this.summon
+        // console.log(dash)
+        // console.log(this)
+        let key = event.key;
+        key = key.toLowerCase()
+        // console.log(key)
+        switch (key) {
+            case 'arrowleft':{
+                // setPlayer
+                if(!atk && !dash && !summon) this.facing = 'a'
+                this.vx = -this.movementSpeed
+                this.keydown = true
+                break
+            }
+            case 'arrowright':{
+                if(!atk && !dash && !summon) this.facing = 'd'
+                this.vx = this.movementSpeed
+                this.keydown = true
+                break
+            }
+            case 'arrowup':{
+                if(!atk && !dash && !summon) this.facing = 'w'
+                this.vy = -this.movementSpeed
+                this.keydown = true
+                break
+            }
+            case 'arrowdown':{
+                if(!atk && !dash && !summon) this.facing = 's'
+                this.vy = this.movementSpeed
+
+                this.keydown = true
+                break
+            }
+            case 'q':{
+                // this.attacking = true
+                // setInterval(this.attacking=false,1000)
+
+                this.state.changeState(new PlayerAttack(this))
+                break
+            }
+            case 'w':{
+                this.state.changeState(new PlayerDash(this))
+                break
+            }
+            case 'e':{
+                this.state.changeState(new PlayerSummon(this))
+                break
+            }
+            case 'd':{
+                this.state.changeState(new PlayerBlock(this))
+                break
+            }
+        }
+    }
+    keyupListener(event) {
+        let key = event.key;
+        key = key.toLowerCase()
+        switch (key) {
+            case 'arrowleft':{
+                if(this.vx === -this.movementSpeed){
+                    this.vx = 0
+                }
+                break
+            }
+            case 'arrowright':{
+
+                if(this.vx === this.movementSpeed){
+                    this.vx = 0
+                }
+                break
+            }
+            case 'arrowup':{
+                if(this.vy === -this.movementSpeed){
+                    this.vy = 0
+                }
+                break
+            }
+            case 'arrowdown':{
+                if(this.vy === this.movementSpeed){
+                    this.vy = 0
+                }
+                break
+            }
+        }
     }
     attack(){
         this.attacking = true
@@ -50,7 +148,7 @@ export class Player extends Entity{
 
     interval
     drawSelf(ctx){
-        console.log(this.HP)
+        // console.log(this.HP)
         if(this.attacking && this.#framesCurr === 2){
             this.attacking = false
             this.#framesCurr=0
@@ -96,7 +194,14 @@ export class Player extends Entity{
 
     }
      move(){
-        if(this.dash || this.block) return
+        if(this.dash || this.block || this.summon) return
+         // priority facing
+        let vx = this.vx
+        let vy = this.vy
+        if(vx!==0 && vy!==0){
+            if (vx>0) this.facing = 'd'
+            else this.facing = 'a'
+        }
         if(!horizontalCollision(this.x+this.vx,this.width)){
             this.x += this.vx
         }
@@ -104,4 +209,6 @@ export class Player extends Entity{
             this.y  += this.vy
         }
     }
+
+
 }
