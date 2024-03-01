@@ -6,6 +6,7 @@ import {PlayerAttack} from "../scripts/state/playerState/playerAttack.js";
 import {PlayerDash} from "../scripts/state/playerState/playerDash.js";
 import {PlayerSummon} from "../scripts/state/playerState/playerSummon.js";
 import {PlayerBlock} from "../scripts/state/playerState/playerBlock.js";
+import {cooldownValidation} from "../helper/frameRateHelper.js";
 
 export class Player extends Entity{
     movementSpeed = 8
@@ -13,6 +14,12 @@ export class Player extends Entity{
     #framesHold = 6
     #framesCurr = 0
     #framesMax = 3
+
+    #dash_cooldown = 0.5
+    #dash_counter = 0
+
+    #block_cooldown = 5
+    #block_counter = 0
 
     /**
      *
@@ -88,7 +95,11 @@ export class Player extends Entity{
                 break
             }
             case 'w':{
-                this.state.changeState(new PlayerDash(this))
+                if(cooldownValidation(this.#dash_counter,this.#dash_cooldown)){
+                    this.state.changeState(new PlayerDash(this))
+                    this.#dash_counter = 0
+                }
+
                 break
             }
             case 'e':{
@@ -96,7 +107,11 @@ export class Player extends Entity{
                 break
             }
             case 'd':{
-                this.state.changeState(new PlayerBlock(this))
+                if(cooldownValidation(this.#block_counter, this.#block_cooldown)){
+                    this.state.changeState(new PlayerBlock(this))
+                    this.#block_counter = 0
+                    console.log("block")
+                }
                 break
             }
         }
@@ -161,7 +176,7 @@ export class Player extends Entity{
 
         if(this.attacking === false) return
 
-        this.#framesElapsed ++
+        this.#framesElapsed ++;
 
         if(this.#framesElapsed % this.#framesHold === 0){
 
@@ -194,14 +209,20 @@ export class Player extends Entity{
 
     }
      move(){
+        this.#dash_counter++
+         this.#block_counter++
         if(this.dash || this.block || this.summon) return
          // priority facing
         let vx = this.vx
         let vy = this.vy
-        if(vx!==0 && vy!==0){
+        if(vx!==0 && vy===0){
             if (vx>0) this.facing = 'd'
             else this.facing = 'a'
         }
+         if(vx===0 && vy!==0){
+             if (vy>0) this.facing = 's'
+             else this.facing = 'w'
+         }
         if(!horizontalCollision(this.x+this.vx,this.width)){
             this.x += this.vx
         }

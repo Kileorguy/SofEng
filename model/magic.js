@@ -53,7 +53,7 @@ export class Magic {
 
             return true
         }
-        if(x <= 0 || y <= 0 || x >= Game.canvasWidth || y >= Game.canvasHeight) return true
+        if(x <= 0-100 || y <= 0-100 || x >= Game.canvasWidth+100 || y >= Game.canvasHeight+100) return true
         // logic damage player
         // console.log(p.HP)
 
