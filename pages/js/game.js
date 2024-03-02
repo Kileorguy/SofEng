@@ -1,5 +1,6 @@
 import {Game} from "../../scripts/gameLogic.js";
 import {FactorySingleton} from "../../scripts/singleton/allFactorySingleton.js";
+import {Laser} from "../../model/laser.js";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -20,6 +21,7 @@ function startGame(){
     // kurang lebih ini buat init init variable gamenya
     let f = FactorySingleton.getInstance()
     const game = Game.getInstance()
+    // ctx.rotate(45*Math.PI/180)
     game.start = true
 
     Game.canvasWidth = cvsWidth
@@ -33,7 +35,7 @@ function startGame(){
     game.setFPS()
     game.enemy.state.startState()
 
-
+    game.laser = new Laser(100,100)
     game.render()
 
     // game.mages.push(f.mageFact.createEntity(1001,100))

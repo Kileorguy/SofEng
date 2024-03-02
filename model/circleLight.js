@@ -2,7 +2,7 @@ import {Game} from "../scripts/gameLogic.js";
 import {cooldownValidation} from "../helper/frameRateHelper.js";
 
 export class CircleLight {
-    v = 50
+    v = 40
     #cooldown = 1
     #radian = 0
     #counter = 0
@@ -17,9 +17,6 @@ export class CircleLight {
     move(player){
         let px = player.x + player.width/2
         let py = player.y + player.height/2
-        let x = this.x
-        let y = this.y
-        // console.log(x,y)
         this.#counter++
         if(!cooldownValidation(this.#counter,this.#cooldown)){
             this.#radian = Math.atan2(py-this.y,px-this.x)

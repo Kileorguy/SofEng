@@ -14,12 +14,14 @@ export class Game {
     static mageCounter = 0
     ctx
     enemy
+    laser
 
     static getInstance = () =>{
         if(this.#gameInstance == null){
             this.#gameInstance = new Game()
         }
         return this.#gameInstance
+
     }
     constructor() {
         this.fact = FactorySingleton.getInstance()
@@ -49,14 +51,14 @@ export class Game {
 
     moveLogic(){
         // console.log(Game.mageCounter)
-        this.enemy.drawSelf(this.ctx)
+        if(this.enemy)this.enemy.drawSelf(this.ctx)
 
         this.player.move()
         this.player.state.updateState()
         this.player.drawSelf(this.ctx)
 
         // console.log(this.magics.length)
-        console.log(this.player.HP)
+        // console.log(this.player.HP)
         this.magics.forEach((m,index)=>{
             m.move()
             m.render(this.ctx)
@@ -95,7 +97,8 @@ export class Game {
             this.then = this.now - (this.elapsed % this.fpsInterval)
             clearCanvas(this.ctx)
             this.moveLogic()
-            this.enemy.state.updateState()
+            if(this.enemy)this.enemy.state.updateState()
+            if(this.laser) this.laser.drawSelf(this.ctx,this.player)
         }
         requestAnimationFrame(this.render.bind(this))
     }
