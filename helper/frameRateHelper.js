@@ -13,8 +13,8 @@ export function frameToSecond(frame){
 
 /**
  *
- * @param counter : number dalam bentuk frames
- * @param cooldown : number dalam bentuk second
+ * @param counter : number
+ * @param cooldown : number
  * @returns {boolean}
  */
 export function cooldownValidation(counter,cooldown){
