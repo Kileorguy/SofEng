@@ -11,8 +11,10 @@ export class Game {
     player
     static canvasWidth
     static canvasHeight
+    static mageCounter = 0
     ctx
     enemy
+
     static getInstance = () =>{
         if(this.#gameInstance == null){
             this.#gameInstance = new Game()
@@ -29,6 +31,8 @@ export class Game {
     elapsed
     magics = []
     monkeys = []
+    mages = []
+    circleLights = []
     setFPS(){
         this.fps = 60
         this.fpsInterval = 1000 / this.fps;
@@ -44,6 +48,7 @@ export class Game {
     }
 
     moveLogic(){
+        // console.log(Game.mageCounter)
         this.enemy.drawSelf(this.ctx)
 
         this.player.move()
@@ -51,6 +56,7 @@ export class Game {
         this.player.drawSelf(this.ctx)
 
         // console.log(this.magics.length)
+        console.log(this.player.HP)
         this.magics.forEach((m,index)=>{
             m.move()
             m.render(this.ctx)
@@ -63,6 +69,18 @@ export class Game {
             m.move()
             m.drawSelf(this.ctx)
             if(m.deathTimer()) this.monkeys.splice(index,1)
+        })
+
+        this.mages.forEach((m,index)=>{
+            m.move()
+            m.drawSelf(this.ctx)
+
+        })
+
+        this.circleLights.forEach((c,idx)=>{
+            c.move(this.player)
+            c.drawSelf(this.ctx)
+            if(c.checkCollision(this.player))this.circleLights.splice(idx,1)
         })
     }
     lastTimestamp = 0;

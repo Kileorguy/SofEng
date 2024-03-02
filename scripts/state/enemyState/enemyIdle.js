@@ -1,6 +1,7 @@
 import {State} from "../state.js";
 import {EnemyWalk} from "./enemyWalk.js";
 import {EnemyMagic} from "./enemyMagic.js";
+import {EnemySummon} from "./enemySummon.js";
 
 export class EnemyIdle extends State{
     #_timer
@@ -33,13 +34,15 @@ export class EnemyIdle extends State{
 
     }
     changeState(){
-        let rand = Math.round(Math.random())+1
+        let rand = Math.round(Math.random()*2)+1
         // console.log(rand)
 
         if(rand===1){
             this.Enemy.state = new EnemyWalk(this.Enemy)
         }else if(rand === 2){
             this.Enemy.state = new EnemyMagic(this.Enemy)
+        }else if(rand === 3){
+            this.Enemy.state = new EnemySummon(this.Enemy)
         }
 
 

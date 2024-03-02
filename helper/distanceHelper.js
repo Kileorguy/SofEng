@@ -4,12 +4,13 @@ import {Game} from "../scripts/gameLogic.js";
  *
  * @param x : number
  * @param y : number
- * @param player : Player
+ * @param px : number
+ * @param py : number
  * @returns {number}
  */
-export function getEuclidean(x,y,player) {
-    let distX = Math.pow(player.x - x,2)
-    let distY = Math.pow(player.y - y,2)
+export function getEuclidean(x,y,px,py) {
+    let distX = Math.pow(px - x,2)
+    let distY = Math.pow(py - y,2)
     return Math.sqrt(distX+distY)
 }
 

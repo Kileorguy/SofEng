@@ -19,7 +19,7 @@ export class Player extends Entity{
     #dash_counter = 0
 
     #block_cooldown = 5
-    #block_counter = 0
+    #block_counter = this.#block_cooldown * 60
 
     #atk_cooldown = 0.5
     #atk_counter = 0
@@ -100,7 +100,8 @@ export class Player extends Entity{
                 break
             }
             case 'w':{
-                if(cooldownValidation(this.#dash_counter,this.#dash_cooldown)){
+                if(cooldownValidation(this.#dash_counter,this.#dash_cooldown) && !this.dash
+                    && !this.block ){
                     this.state.changeState(new PlayerDash(this))
                     this.#dash_counter = 0
                 }
@@ -108,14 +109,16 @@ export class Player extends Entity{
                 break
             }
             case 'e':{
+                if(!this.dash && !this.block)
                 this.state.changeState(new PlayerSummon(this))
                 break
             }
             case 'd':{
-                if(cooldownValidation(this.#block_counter, this.#block_cooldown)){
+                if(cooldownValidation(this.#block_counter, this.#block_cooldown) && !this.dash
+                    && !this.block){
                     this.state.changeState(new PlayerBlock(this))
                     this.#block_counter = 0
-                    console.log("block")
+                    // console.log("block")
                 }
                 break
             }

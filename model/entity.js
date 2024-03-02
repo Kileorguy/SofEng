@@ -13,4 +13,11 @@ export class Entity {
         this.width = width
         this.height = height
     }
+
+    move(){
+        throw new Error("Cannot instantiate abstract class");
+    }
+    drawSelf(){
+        throw new Error("Cannot instantiate abstract class");
+    }
 }

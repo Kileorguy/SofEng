@@ -1,4 +1,5 @@
 import {Game} from "../scripts/gameLogic.js";
+import {getEuclidean} from "../helper/distanceHelper.js";
 
 export class Magic {
     v = 15
@@ -6,8 +7,9 @@ export class Magic {
     #deltaTime
     #previousTime
     #currentTime
-    #timer = 0.8
+    #timer = 0.7
     #radian = 0
+    follow = true
 
     /**
      *
@@ -33,8 +35,14 @@ export class Magic {
         this.px = this.player.x + this.player.width/2
         this.py = this.player.y + this.player.height/2
 
-        if(this.#deltaTime<this.#timer+0.5){
+        if(this.#deltaTime>=this.#timer+0.5) {
+            this.follow = false
+        }
+        if(getEuclidean(this.x,this.y,this.px,this.py) > 150 &&  this.follow){
+
             this.#radian = Math.atan2(this.py - this.y, this.px - this.x);
+        }else{
+            this.follow = false
         }
 
         this.x += this.v*Math.cos(this.#radian)

@@ -1,6 +1,7 @@
 import {EnemyFactory} from "../factory/entity/enemyFactory.js";
 import {PlayerFactory} from "../factory/entity/playerFactory.js";
 import {MonkeyFactory} from "../factory/entity/monkeyFactory.js";
+import {MageFactory} from "../factory/entity/mageFactory.js";
 
 export class FactorySingleton {
 
@@ -8,6 +9,7 @@ export class FactorySingleton {
     enemyFact
     playerFact
     monkeyFact
+    mageFact
     constructor() {
     }
 
@@ -16,6 +18,7 @@ export class FactorySingleton {
         f.enemyFact = new EnemyFactory()
         f.playerFact = new PlayerFactory()
         f.monkeyFact = new MonkeyFactory()
+        f.mageFact = new MageFactory()
         return f
     }
     static getInstance(){

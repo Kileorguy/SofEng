@@ -27,8 +27,7 @@ export class Monkey extends Entity{
     }
 
     deathTimer(){
-        if(this.#counter >= 60*8) return true
-        return false
+        return this.#counter >= 60 * 8;
     }
 
     move(){

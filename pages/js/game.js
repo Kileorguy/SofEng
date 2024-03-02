@@ -33,8 +33,10 @@ function startGame(){
     game.setFPS()
     game.enemy.state.startState()
 
+
     game.render()
 
+    // game.mages.push(f.mageFact.createEntity(1001,100))
     // game.magics.push(new Magic(150,200))
 
 
