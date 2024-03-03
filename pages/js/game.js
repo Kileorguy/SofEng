@@ -31,8 +31,8 @@ function startGame(){
     game.player = f.playerFact.createEntity(cvsWidth/2,cvsHeight/2)
     game.player.state.startState()
 
-    game.enemy = f.enemyFact.createEntity(cvsWidth/5, cvsHeight/2)
     game.setFPS()
+    game.enemy = f.enemyFact.createEntity(cvsWidth/5, cvsHeight/2)
     game.enemy.state.startState()
 
     game.laser = new Laser(100,100)
