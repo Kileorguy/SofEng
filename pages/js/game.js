@@ -28,7 +28,7 @@ function startGame(){
     Game.canvasHeight = cvsHeight
 
     game.ctx = ctx
-    game.player = f.playerFact.createEntity(cvsWidth/2,cvsHeight/2)
+    game.player = f.playerFact.createEntity(cvsWidth/2,cvsHeight/4)
     game.player.state.startState()
 
     game.setFPS()
