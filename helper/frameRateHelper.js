@@ -13,8 +13,8 @@ export function frameToSecond(frame){
 
 /**
  *
- * @param counter : number
- * @param cooldown : number
+ * @param counter : number frames
+ * @param cooldown : number detik
  * @returns {boolean}
  */
 export function cooldownValidation(counter,cooldown){

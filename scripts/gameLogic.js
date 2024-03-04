@@ -1,6 +1,7 @@
 import {clearCanvas} from "../helper/canvasHelper.js";
 import {Magic} from "../model/magic.js";
 import {FactorySingleton} from "./singleton/allFactorySingleton.js";
+import {Laser} from "../model/laser.js";
 
 
 // script isi logic game (start game, dst)
@@ -14,7 +15,7 @@ export class Game {
     static mageCounter = 0
     ctx
     enemy
-    laser
+    laser = null
 
     static getInstance = () =>{
         if(this.#gameInstance == null){
@@ -47,6 +48,13 @@ export class Game {
     }
     initMonkey(x,y){
         this.monkeys.push(this.fact.monkeyFact.createEntity(x,y))
+    }
+
+    initLaser(x,y){
+        if(this.laser === null){
+            this.laser = new Laser(x,y)
+
+        }
     }
 
     moveLogic(){

@@ -2,6 +2,7 @@ import {Entity} from "./entity.js";
 import {EnemyIdle} from "../scripts/state/enemyState/enemyIdle.js";
 import {EnemySummon} from "../scripts/state/enemyState/enemySummon.js";
 import {EnemyMagic} from "../scripts/state/enemyState/enemyMagic.js";
+import {EnemyLaser} from "../scripts/state/enemyState/enemyLaser.js";
 
 export class Enemy extends Entity{
     state
@@ -16,7 +17,8 @@ export class Enemy extends Entity{
      */
     constructor(HP,x,y,width,height) {
         super(HP,x,y,width,height);
-        this.state = new EnemyIdle(this)
+        // this.state = new EnemyIdle(this)
+        this.state = new EnemyLaser(this)
         // this.state = new EnemySummon(this)
         // this.state = new EnemyMagic(this)
         this.vx = 6
