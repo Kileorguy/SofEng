@@ -43,6 +43,14 @@ export class Game {
         this.startTime = this.then;
     }
 
+    drawHealth(ctx){
+        ctx.font = '30px Arial'
+        ctx.fillStyle = 'green'
+        ctx.fillText(this.player.HP,10,50,100,100)
+        ctx.fillStyle = 'red'
+        ctx.fillText(this.enemy.HP,10,100,100,100)
+    }
+
     initMagic(x,y){
         this.magics.push(new Magic(x,y))
     }
@@ -84,7 +92,7 @@ export class Game {
         this.mages.forEach((m,index)=>{
             m.move()
             m.drawSelf(this.ctx)
-
+            if(m.HP<=0) this.mages.splice(index,1)
         })
 
         this.circleLights.forEach((c,idx)=>{
@@ -93,6 +101,7 @@ export class Game {
             if(c.checkCollision(this.player))this.circleLights.splice(idx,1)
         })
     }
+    animation
     lastTimestamp = 0;
     render(timestamp){
         let deltaTime = (timestamp - this.lastTimestamp) / 16;
@@ -102,13 +111,20 @@ export class Game {
         this.elapsed = this.now - this.then
         // console.log(this.elapsed)
         if(this.elapsed > this.fpsInterval){
+            // console.log(this.player.HP)
             this.then = this.now - (this.elapsed % this.fpsInterval)
             clearCanvas(this.ctx)
+            this.drawHealth(this.ctx)
+
             this.moveLogic()
             if(this.enemy)this.enemy.state.updateState()
             if(this.laser) this.laser.drawSelf(this.ctx,this.player)
         }
-        requestAnimationFrame(this.render.bind(this))
+        this.animation = requestAnimationFrame(this.render.bind(this))
+        if(this.player.HP <= 0 || this.enemy.HP <=0){
+            cancelAnimationFrame(this.animation)
+            clearCanvas(this.ctx)
+        }
     }
 
 

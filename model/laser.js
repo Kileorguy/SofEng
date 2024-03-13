@@ -15,6 +15,7 @@ export class Laser {
         this.laserGrids = []
         let game = Game.getInstance()
         let p = game.player
+        this.p = p
         this.img = new Image(this.offset,this.offset)
         this.img.src = '../public/images/images.jpg'
         this.rad = Math.atan2(p.y+p.height/2-y,p.x+p.width/2-x)
@@ -34,7 +35,7 @@ export class Laser {
         if(angularDistance < -3){
             angularDistance = Math.abs(angularDistance)
         }
-        console.log(angularDistance)
+        // console.log(angularDistance)
         if(diff < -0.02 || diff > 0.02){
             if (angularDistance > 0) {
                 this.rad += 0.005
@@ -51,7 +52,10 @@ export class Laser {
             let laserGrid = new LaserGrid(x,y)
             this.laserGrids.push(laserGrid)
             if(x + offset >= player.x && x-offset <= player.x + player.width
-            && y+offset >= player.y && y-offset <= player.y + player.height) break
+            && y+offset >= player.y && y-offset <= player.y + player.height){
+                this.p.takeDamage(2,true)
+                break
+            }
         }
     }
 

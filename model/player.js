@@ -24,6 +24,9 @@ export class Player extends Entity{
     #atk_cooldown = 0.5
     #atk_counter = 0
 
+    #immune_timer = 0.2
+    #immune_counter = 0
+
     /**
      *
      * @param HP : number
@@ -162,15 +165,48 @@ export class Player extends Entity{
     /**
      *
      * @param dmg : number
+     * @param laser : boolean
      */
-    takeDamage(dmg){
+    takeDamage(dmg, laser = false){
         if(this.block || this.dash) return
-        this.HP -= dmg
+        if(cooldownValidation(this.#immune_counter,this.#immune_timer) || !laser){
+            this.HP -= dmg
+            this.#immune_counter=0
+        }
     }
 
 
     interval
     drawSelf(ctx){
+        const checkCollision = (x,y,width,height) =>{
+            let game = Game.getInstance()
+            let enemy = game.enemy
+            let mages = game.mages
+            // console.log(x,enemy.x)
+            // console.log(x+width, enemy.x+width)
+            // 324.5    289.8
+            // 404.5    369.8
+            if (x < enemy.x + enemy.width &&
+                x + width > enemy.x &&
+                y < enemy.y + enemy.height &&
+                y + height > enemy.y) {
+                enemy.takeDamage(10,true)
+            }
+
+            for (let mage of mages) {
+                if (
+                    x < mage.x + mage.width &&
+                    x + width > mage.x &&
+                    y < mage.y + mage.height &&
+                    y + height > mage.y
+                ) {
+                    // console.log('test')
+                    mage.takeDamage(10,true)
+                }
+            }
+
+
+        }
         // console.log(this.HP)
         if(this.attacking && this.#framesCurr === 2){
             this.attacking = false
@@ -203,24 +239,31 @@ export class Player extends Entity{
             let atkX = this.x-this.atkW;
             let atkY = this.y;
             ctx.fillRect(atkX, atkY, this.atkW,this.atkH)
+            checkCollision(atkX,atkY,this.atkW,this.atkH)
         }else if(this.facing ==='d'){
             let atkX = this.x+this.width;
             let atkY = this.y;
             ctx.fillRect(atkX, atkY, this.atkW,this.atkH)
+            checkCollision(atkX,atkY,this.atkW,this.atkH)
+
         }else if(this.facing ==='w'){
             let atkX = this.x
             let atkY = this.y-this.atkW
             ctx.fillRect(atkX, atkY,this.atkH,this.atkW)
+            checkCollision(atkX,atkY,this.atkW,this.atkH)
+
         }else if(this.facing ==='s'){
             let atkX = this.x
             let atkY = this.y+this.height
             ctx.fillRect(atkX, atkY,this.atkH,this.atkW)
+            checkCollision(atkX,atkY,this.atkW,this.atkH)
+
         }
 
     }
      move(){
 
-        this.#dash_counter++; this.#block_counter++; this.#atk_counter++
+        this.#dash_counter++; this.#block_counter++; this.#atk_counter++; this.#immune_counter++
         if(this.dash || this.block || this.summon) return
          // priority facing
         let vx = this.vx

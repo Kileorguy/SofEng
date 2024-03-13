@@ -19,7 +19,7 @@ export class EnemyLaser extends State{
 
     startState(){
         this.#counter = 0
-        this.#duration = 5 // detik
+        this.#duration = 3 // detik
         this.#start = 0.5
         let enemy = this.game.enemy
 

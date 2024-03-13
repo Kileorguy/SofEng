@@ -10,7 +10,7 @@ export class MageFactory extends EntityFactory {
     createEntity(x,y) {
         if(Game.mageCounter <4){
             Game.mageCounter++
-            return new Mage(100,x,y,50,50)
+            return new Mage(30,x,y,50,50)
         }
         return null
     }

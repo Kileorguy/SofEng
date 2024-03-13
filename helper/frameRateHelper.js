@@ -18,5 +18,6 @@ export function frameToSecond(frame){
  * @returns {boolean}
  */
 export function cooldownValidation(counter,cooldown){
+    // console.log(counter,cooldown)
     return counter >= (cooldown * frameRate)
 }

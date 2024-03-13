@@ -38,7 +38,13 @@ export class EnemySummon extends State{
             if(Math.round(Math.random())===0){
                 multi1 = -1
             }
-            let mage = game.fact.mageFact.createEntity(eX+randX*multi,eY+randY*multi1)
+            let x = eX + randX * multi;
+            let y = eY+randY*multi1;
+            if(x < 0 || y < 0 || x > Game.canvasWidth || y > Game.canvasHeight){
+                i--
+                continue
+            }
+            let mage = game.fact.mageFact.createEntity(x,y)
             if(mage) game.mages.push(mage)
 
         }

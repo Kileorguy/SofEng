@@ -5,3 +5,4 @@ export function clearCanvas(ctx) {
     ctx.fillStyle = "black"
     ctx.fillRect(0,0,Game.canvasWidth,Game.canvasHeight)
 }
+

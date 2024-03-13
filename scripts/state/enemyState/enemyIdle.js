@@ -18,7 +18,7 @@ export class EnemyIdle extends State{
     startState(){
         // this.#_previousTime = performance.now()
         // this.#_currentTime = performance.now()
-        this.#_timer = Math.random()*2+1
+        this.#_timer = Math.random()*2
         this.change = () =>{this.changeState()}
 
     }
