@@ -45,21 +45,36 @@ export class Magic {
             this.follow = false
         }
 
+
         this.x += this.v*Math.cos(this.#radian)
         this.y += this.v*Math.sin(this.#radian)
 
     }
 
+    checkMonkey = (x,r,m)=>{
+
+    }
     checkCollision(){
         // console.log(Math.round(getEuclidean(this.x, this.y, this.player)))
         let x = this.x
         let y = this.y
         let p = this.player
-        if(x+this._radius >= p.x && x <= p.x+this._radius + p.width
-            && y+this._radius >= p.y && y-this._radius <= p.y + p.height){
+        let r = this._radius;
+        if(x+ r >= p.x && x <= p.x+r + p.width
+            && y+r >= p.y && y-r <= p.y + p.height){
             p.takeDamage(5)
 
             return true
+        }
+        let game = Game.getInstance()
+        let monkeys = game.monkeys
+        for(let i = 0; i<monkeys.length;i++){
+            let m = monkeys[i]
+            if(x+r >= m.x && x-r <= m.x + m.width
+            && y + r >= m.y && y - r <= m.y + m.height){
+                m.HP -= 20
+                return true
+            }
         }
         if(x <= 0-100 || y <= 0-100 || x >= Game.canvasWidth+100 || y >= Game.canvasHeight+100) return true
         // logic damage player

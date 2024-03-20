@@ -56,6 +56,20 @@ export class Laser {
                 this.p.takeDamage(2,true)
                 break
             }
+            let game = Game.getInstance()
+            let monkeys = game.monkeys
+            var col = false
+            for(let i = 0; i<monkeys.length;i++){
+                let m = monkeys[i]
+
+                if(x+offset >= m.x && x-offset <= m.x + m.width
+                    && y + offset >= m.y && y - offset <= m.y + m.height){
+                    col = true
+                    m.HP -= 3
+                    break
+                }
+            }
+            if(col) break
         }
     }
 

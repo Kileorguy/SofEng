@@ -40,11 +40,15 @@ export class EnemyIdle extends State{
 
         if(rand===1){
             this.Enemy.state = new EnemyWalk(this.Enemy)
+            // this.Enemy.state = new EnemyMagic(this.Enemy)
+
         }else if(rand === 2){
             this.Enemy.state = new EnemyMagic(this.Enemy)
         }else if(rand === 3){
+            // this.Enemy.state = new EnemyMagic(this.Enemy)
             this.Enemy.state = new EnemySummon(this.Enemy)
         }else if(rand === 4){
+            // this.Enemy.state = new EnemyMagic(this.Enemy)
             this.Enemy.state = new EnemyLaser(this.Enemy)
         }
 
