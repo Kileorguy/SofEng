@@ -1,0 +1,88 @@
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body.bg{
+    background-color: black;
+}
+
+nav div a{
+    color: white;
+    font-family: 'Irish Grover';
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+nav div span {
+    color: white;
+    font-family: 'Irish Grover';
+    padding: 0 4px;
+    font-size: 22px;
+}
+
+nav div.Exit{
+    padding-top: 2%;
+    padding-left: 4%;
+}
+
+nav div.Exit a:hover{
+    text-decoration: underline;
+}
+
+table.scoreboard {
+    font-family: 'Irish Grover';
+    border-collapse: collapse;
+    width: 60%;
+}
+
+table.scoreboard tr th, table.scoreboard tr td{
+    font-size: 22px;
+    text-align: left;
+    padding: 20px;
+}
+
+table.scoreboard tr td{
+    background-color: white;
+    color: black;
+}
+
+table.scoreboard tr th {
+    background-color: #930000;
+    color: white;
+}
+
+div.tables{
+    padding-left: 5%;
+    padding-top: 3%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+table.global{
+    padding-left: 13%;
+}
+
+table.global tr th.glb {
+    font-family: 'Irish Grover';
+    color: white;
+    text-align: center;
+    padding-top: 12%;
+}
+
+table.global tr th {
+    font-family: 'Irish Grover';
+    color: white;
+    text-align: center;
+    padding-top: 25%;
+}
+
+table.global tr td {
+    font-family: 'Irish Grover';
+    color: white;
+    text-align: center;
+    
+}
