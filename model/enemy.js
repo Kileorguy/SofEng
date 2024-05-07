@@ -19,8 +19,8 @@ export class Enemy extends Entity{
      */
     constructor(HP,x,y,width,height) {
         super(HP,x,y,width,height);
-        // this.state = new EnemyIdle(this)
-        this.state = new EnemyLaser(this)
+        this.state = new EnemyIdle(this)
+        // this.state = new EnemyLaser(this)
         // this.state = new EnemySummon(this)
         // this.state = new EnemyMagic(this)
         this.vx = 6
