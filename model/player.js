@@ -257,7 +257,6 @@ export class Player extends Entity{
             let atkY = this.y+this.height
             ctx.fillRect(atkX, atkY,this.atkH,this.atkW)
             checkCollision(atkX,atkY,this.atkW,this.atkH)
-
         }
 
     }

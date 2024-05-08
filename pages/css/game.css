@@ -1,13 +1,32 @@
 nav{
-    height: 40px;
+    height: 64px;
     background-color: black;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
+    font-size: 24px;
 }
+
+*{
+}
+
+#play{
+    color: #DFB009;
+
+}
+
+.leftNav{
+    padding-left: 40px;
+}
+.rightNav{
+    display: flex;
+    padding-right: 30px;
+    gap: 30px;
+}
+
 nav p{
     color: white;
 }
@@ -17,14 +36,18 @@ body{
     padding: 0;
     background-image: url('../../public/images/gameBg.jpg');
     z-index: 1;
+    overflow: hidden;
 }
 
 #canvas{
     border: 5px solid black;
+    width: 100vw;
+    height: 100vh;
+    /*height: auto;*/
+
 }
 .outerGame{
     z-index: 5;
-    padding-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
