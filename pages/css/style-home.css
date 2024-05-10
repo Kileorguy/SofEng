@@ -12,7 +12,7 @@ body.bg{
 
 nav {
     background: black;
-    height: 60px;
+    height: 80px;
     width: 100%;
     position: fixed;
     position: top;
@@ -24,7 +24,18 @@ nav {
 nav div {
     float: left;
     margin-left: 1%;
-    display: flex;
+    /* display: flex; */
+}
+
+nav div.logo{
+    max-width: 40%;
+    margin: 0 auto;
+    padding-left: 20px;
+}
+
+nav div.logo img{
+    width: 40%;
+    height: auto;
 }
 
 .switch {
@@ -35,7 +46,7 @@ nav div {
     width: 40px;
     height: 28px;
     padding-left: 10px;
-    padding-top: 18px;
+    padding-top: 26px;
 }
   
 /* Hide default HTML checkbox */
@@ -95,12 +106,12 @@ input:checked + .slider:before {
 
 .home {
     padding-left: 8px;
-    padding-top: 20px;
+    padding-top: 28px;
 }
 
 nav div.play{
     padding-right: 2%;
-    padding-top: 20px;
+    padding-top: 28px;
     float: right;
 }
 
@@ -119,7 +130,7 @@ a.active, a:hover {
 }
 
 section.vid {
-    padding-top: 70px;
+    padding-top: 100px;
     padding-bottom: 40px;
     object-fit: cover;
 }
@@ -127,7 +138,7 @@ section.vid {
 div.kartun1{
     display: grid;
     align-items: center; 
-    grid-template-columns: 35% 35%;
+    grid-template-columns: 1.2fr 1.2fr 1fr;
     column-gap: 4%;
     background-color: white;
     font-family: 'Irish Grover';
@@ -135,13 +146,14 @@ div.kartun1{
     height: 200px;
 }
 
-div.game2{
+div.game1{
     display: grid;
     align-items: center; 
-    grid-template-columns: 35% 35%;
+    grid-template-columns: 0.7fr 1.2fr 1fr;
     column-gap: 4%;
-    color: white;
+    float: right;
     font-family: 'Irish Grover';
+    background-color: white;
     border: 2px solid #DFB009;
     height: 200px;
 }
@@ -152,11 +164,39 @@ div.kartun1 img, div.game2 img{
     height: 150px;
 }
 
+div.kartun2{
+    display: grid;
+    align-items: center; 
+    grid-template-columns: 0.7fr 1fr 1fr;
+    column-gap: 4%;
+    float: right;
+    font-family: 'Irish Grover';
+    color: white;
+    border: 2px solid #DFB009;
+    height: 200px;
+}
+
+div.game2{
+    display: grid;
+    align-items: center; 
+    grid-template-columns: 1.32fr 1.38fr 1fr;
+    column-gap: 4%;
+    color: white;
+    font-family: 'Irish Grover';
+    border: 2px solid #DFB009;
+    height: 200px;
+}
+
+div.kartun2 img, div.game1 img{
+    float: left;
+    width: 150px;
+}
+
 div.kartun3{
     display: grid;
     align-items: center; 
-    grid-template-columns: 38% 35%;
-    column-gap: 1%;
+    grid-template-columns: 1.25fr 1.2fr 1fr;
+    column-gap: 1.5%;
     background-color: white;
     font-family: 'Irish Grover';
     border: 2px solid #DFB009;
@@ -165,7 +205,7 @@ div.kartun3{
 div.game3{
     display: grid;
     align-items: center; 
-    grid-template-columns: 22% 35% 35%;
+    grid-template-columns: 0.75fr 1.1fr 1fr;
     column-gap: 1%;
     background-color: white;
     font-family: 'Irish Grover';
@@ -184,35 +224,4 @@ div.game3 img{
 
 div.game3.desc3 {
     float: right;
-}
-
-div.kartun2{
-    display: grid;
-    align-items: center; 
-    /* grid-template-columns: 1fr 1fr 0.7fr; */
-    grid-template-columns: 22% 35% 35%;
-    column-gap: 4%;
-    float: right;
-    font-family: 'Irish Grover';
-    color: white;
-    border: 2px solid #DFB009;
-    height: 200px;
-}
-
-div.game1{
-    display: grid;
-    align-items: center; 
-    /* grid-template-columns: 1fr 1fr 0.7fr; */
-    grid-template-columns: 22% 35% 35%;
-    column-gap: 4%;
-    float: right;
-    font-family: 'Irish Grover';
-    background-color: white;
-    border: 2px solid #DFB009;
-    height: 200px;
-}
-
-div.kartun2 img, div.game1 img{
-    float: left;
-    width: 150px;
 }

@@ -10,6 +10,18 @@ body.bg{
     background-color: black;
 }
 
+section.con-con{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+div.container {
+    text-align: center;
+}
+
 nav div a{
     color: white;
     font-family: 'Irish Grover';
@@ -40,6 +52,7 @@ div.play a{
     font-size: 40px;
     padding: 22px 30px 22px 30px;
     background-color: #D9D9D9;
+    display: inline-block;
 }
 
 div.sb a{
@@ -49,6 +62,7 @@ div.sb a{
     font-size: 30px;
     padding: 20px 35px 20px 35px;
     background-color: #D9D9D9;
+    display: inline-block;
 }
 
 div.play{
