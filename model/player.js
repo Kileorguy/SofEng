@@ -14,6 +14,10 @@ export class Player extends Entity{
     #framesHold = 6
     #framesCurr = 0
     #framesMax = 3
+    #framesCounter = 0
+
+    #stateVal = 'attack'
+    #spriteFrame = 0
 
     #dash_cooldown = 0.5
     #dash_counter = 0
@@ -51,6 +55,7 @@ export class Player extends Entity{
         this.block = false
         this.summon = false
         this.game = Game.getInstance()
+        this.sprites = this.game.facade.image['player']
         this.keydownListener = this.keydownListener.bind(this);
         this.keyupListener = this.keyupListener.bind(this);
         document.addEventListener('keydown', this.keydownListener);
@@ -175,38 +180,33 @@ export class Player extends Entity{
         }
     }
 
+    checkCollision = (x,y,width,height) =>{
+        let game = Game.getInstance()
+        let enemy = game.enemy
+        let mages = game.mages
+        if (x < enemy.x + enemy.width &&
+            x + width > enemy.x &&
+            y < enemy.y + enemy.height &&
+            y + height > enemy.y) {
+            enemy.takeDamage(10,true)
+        }
 
+        for (let mage of mages) {
+            if (
+                x < mage.x + mage.width &&
+                x + width > mage.x &&
+                y < mage.y + mage.height &&
+                y + height > mage.y
+            ) {
+                mage.takeDamage(10,true)
+            }
+        }
+
+
+    }
     interval
     drawSelf(ctx){
-        const checkCollision = (x,y,width,height) =>{
-            let game = Game.getInstance()
-            let enemy = game.enemy
-            let mages = game.mages
-            // console.log(x,enemy.x)
-            // console.log(x+width, enemy.x+width)
-            // 324.5    289.8
-            // 404.5    369.8
-            if (x < enemy.x + enemy.width &&
-                x + width > enemy.x &&
-                y < enemy.y + enemy.height &&
-                y + height > enemy.y) {
-                enemy.takeDamage(10,true)
-            }
 
-            for (let mage of mages) {
-                if (
-                    x < mage.x + mage.width &&
-                    x + width > mage.x &&
-                    y < mage.y + mage.height &&
-                    y + height > mage.y
-                ) {
-                    // console.log('test')
-                    mage.takeDamage(10,true)
-                }
-            }
-
-
-        }
         // console.log(this.HP)
         if(this.attacking && this.#framesCurr === 2){
             this.attacking = false
@@ -214,49 +214,60 @@ export class Player extends Entity{
             this.#framesElapsed=0
         }
 
-        // console.log(this.attacking)
-
         if(!this.block) ctx.fillStyle = 'blue'
         else ctx.fillStyle = 'cyan'
-        ctx.fillRect(this.x,this.y,this.width,this.height)
+        // ctx.fillRect(this.x,this.y,this.width,this.height)
 
-        if(this.attacking === false) return
+        ctx.drawImage(this.sprites[this.#stateVal][this.#spriteFrame],this.x,this.y,this.width,this.height)
+        this.#framesCounter += 1
 
-        this.#framesElapsed ++;
+        if(this.#framesCounter % this.#framesHold === 0){
+            // if(this.#framesCurr < this.#framesMax - 1){
+            // this.#framesCurr+=1
+            this.#spriteFrame+=1
+            this.#spriteFrame = (this.#spriteFrame + 1) % this.sprites[this.#stateVal].length
 
-        if(this.#framesElapsed % this.#framesHold === 0){
-
-            // console.log(this.#framesElapsed,this.#framesCurr,this.#framesMax-1,this.#framesHold)
-            if(this.#framesCurr < this.#framesMax - 1){
-                this.#framesCurr+=1
-            }else{
-                // this.#framesCurr=0
-            }
+            // }
         }
-        ctx.fillStyle = 'gray'
 
-        if(this.facing ==='a'){
-            let atkX = this.x-this.atkW;
-            let atkY = this.y;
-            ctx.fillRect(atkX, atkY, this.atkW,this.atkH)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
-        }else if(this.facing ==='d'){
-            let atkX = this.x+this.width;
-            let atkY = this.y;
-            ctx.fillRect(atkX, atkY, this.atkW,this.atkH)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
+        if(this.attacking === true) {
+            this.#framesElapsed ++;
 
-        }else if(this.facing ==='w'){
-            let atkX = this.x
-            let atkY = this.y-this.atkW
-            ctx.fillRect(atkX, atkY,this.atkH,this.atkW)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
+            if(this.#framesElapsed % this.#framesHold === 0){
+                // if(this.#framesCurr < this.#framesMax - 1){
+                this.#framesCurr+=1
+                // this.#spriteFrame+=1
+                // this.#spriteFrame = (this.#spriteFrame + 1) % this.sprites[this.#stateVal].length
 
-        }else if(this.facing ==='s'){
-            let atkX = this.x
-            let atkY = this.y+this.height
-            ctx.fillRect(atkX, atkY,this.atkH,this.atkW)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
+                // }
+            }
+
+
+
+
+
+
+            ctx.fillStyle = 'gray'
+            let atkX, atkY,atkW = this.atkW, atkH = this.atkH
+            if(this.facing ==='a'){
+                atkX = this.x-this.atkW;
+                atkY = this.y;
+                atkW = this.atkH
+                atkH = this.atkW
+            }else if(this.facing ==='d'){
+                atkX = this.x+this.width;
+                atkY = this.y;
+                atkW = this.atkH
+                atkH = this.atkW
+            }else if(this.facing ==='w'){
+                atkX = this.x
+                atkY = this.y-this.atkW
+            }else if(this.facing ==='s'){
+                atkX = this.x
+                atkY = this.y+this.height
+            }
+            ctx.fillRect(atkX, atkY,atkH,atkW)
+            this.checkCollision(atkX,atkY,atkW,atkH)
         }
 
     }

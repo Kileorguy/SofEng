@@ -3,6 +3,7 @@ import {Magic} from "../model/magic.js";
 import {FactorySingleton} from "./singleton/allFactorySingleton.js";
 import {Laser} from "../model/laser.js";
 import {FirstGameState} from "./state/gameState/firstGameState.js";
+import {SpriteFacade} from "./facade/spriteFacade.js";
 
 
 // script isi logic game (start game, dst)
@@ -15,6 +16,8 @@ export class Game {
     static mageCounter = 0
     static level = 1
     ctx
+    facade = new SpriteFacade()
+
 
 
     static getInstance = () =>{
