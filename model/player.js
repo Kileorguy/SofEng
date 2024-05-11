@@ -11,12 +11,12 @@ import {cooldownValidation} from "../helper/frameRateHelper.js";
 export class Player extends Entity{
     movementSpeed = 8
     #framesElapsed = 0
-    #framesHold = 6
+    #framesHold = 4
     #framesCurr = 0
     #framesMax = 3
     #framesCounter = 0
 
-    #stateVal = 'attack'
+    #stateVal = 'move'
     #spriteFrame = 0
 
     #dash_cooldown = 0.5
@@ -77,18 +77,24 @@ export class Player extends Entity{
                 if(!atk && !dash && !summon) this.facing = 'a'
                 this.vx = -this.movementSpeed
                 this.keydown = true
+                this.#spriteFrame = 0
+                this.#stateVal = 'move'
                 break
             }
             case 'arrowright':{
                 if(!atk && !dash && !summon) this.facing = 'd'
                 this.vx = this.movementSpeed
                 this.keydown = true
+                this.#spriteFrame = 0
+                this.#stateVal = 'move'
                 break
             }
             case 'arrowup':{
                 if(!atk && !dash && !summon) this.facing = 'w'
                 this.vy = -this.movementSpeed
                 this.keydown = true
+                this.#spriteFrame = 0
+                this.#stateVal = 'move'
                 break
             }
             case 'arrowdown':{
@@ -96,6 +102,8 @@ export class Player extends Entity{
                 this.vy = this.movementSpeed
 
                 this.keydown = true
+                this.#spriteFrame = 0
+                this.#stateVal = 'move'
                 break
             }
             case 'q':{
@@ -104,6 +112,8 @@ export class Player extends Entity{
                 if(cooldownValidation(this.#atk_counter, this.#atk_cooldown)){
                     this.state.changeState(new PlayerAttack(this))
                     this.#atk_counter = 0
+                    this.#spriteFrame = 0
+                    this.#stateVal = 'attack'
                 }
                 break
             }
@@ -112,6 +122,8 @@ export class Player extends Entity{
                     && !this.block ){
                     this.state.changeState(new PlayerDash(this))
                     this.#dash_counter = 0
+                    this.#spriteFrame = 0
+                    this.#stateVal = 'attack'
                 }
 
                 break
@@ -119,6 +131,8 @@ export class Player extends Entity{
             case 'e':{
                 if(!this.dash && !this.block)
                 this.state.changeState(new PlayerSummon(this))
+                this.#spriteFrame = 0
+                this.#stateVal = 'attack'
                 break
             }
             case 'd':{
@@ -126,6 +140,8 @@ export class Player extends Entity{
                     && !this.block){
                     this.state.changeState(new PlayerBlock(this))
                     this.#block_counter = 0
+                    this.#spriteFrame = 0
+                    this.#stateVal = 'attack'
                     // console.log("block")
                 }
                 break
@@ -212,20 +228,45 @@ export class Player extends Entity{
             this.attacking = false
             this.#framesCurr=0
             this.#framesElapsed=0
+            this.#framesCounter = 0
+            this.#spriteFrame=0
+            this.#stateVal = 'move'
         }
-
+        console.log(this.#spriteFrame)
         if(!this.block) ctx.fillStyle = 'blue'
         else ctx.fillStyle = 'cyan'
         // ctx.fillRect(this.x,this.y,this.width,this.height)
 
-        ctx.drawImage(this.sprites[this.#stateVal][this.#spriteFrame],this.x,this.y,this.width,this.height)
+
+        if(this.#stateVal === 'attack'){
+            ctx.drawImage(this.sprites[this.#stateVal][this.#spriteFrame],this.x,this.y,this.width,this.height)
+        }else if(this.#stateVal === 'move'){
+            if(this.facing ==='a'){
+                ctx.drawImage(this.sprites[this.#stateVal]['left'][this.#spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='d'){
+                ctx.drawImage(this.sprites[this.#stateVal]['right'][this.#spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='w'){
+                ctx.drawImage(this.sprites[this.#stateVal]['up'][this.#spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='s'){
+                ctx.drawImage(this.sprites[this.#stateVal]['down'][this.#spriteFrame],this.x,this.y,this.width,this.height)
+            }
+        }
+
+
+
         this.#framesCounter += 1
 
         if(this.#framesCounter % this.#framesHold === 0){
             // if(this.#framesCurr < this.#framesMax - 1){
             // this.#framesCurr+=1
-            this.#spriteFrame+=1
-            this.#spriteFrame = (this.#spriteFrame + 1) % this.sprites[this.#stateVal].length
+
+            if(this.#stateVal === 'move'){
+                this.#spriteFrame = (this.#spriteFrame + 1) % this.sprites[this.#stateVal]['up'].length
+
+            }else{
+                this.#spriteFrame = (this.#spriteFrame + 1) % this.sprites[this.#stateVal].length
+
+            }
 
             // }
         }
@@ -241,12 +282,6 @@ export class Player extends Entity{
 
                 // }
             }
-
-
-
-
-
-
             ctx.fillStyle = 'gray'
             let atkX, atkY,atkW = this.atkW, atkH = this.atkH
             if(this.facing ==='a'){
