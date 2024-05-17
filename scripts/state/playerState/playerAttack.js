@@ -12,6 +12,7 @@ export class PlayerAttack extends State{
         this.player = player
     }
     startState(){
+        this.player.spriteFrame = 0
         this.player.attack()
         this.changeState(new PlayerDefault(this.player))
     }

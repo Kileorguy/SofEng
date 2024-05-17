@@ -3,7 +3,12 @@ export class SpriteFacade {
     image = {
         player : {
             'attack' : [],
-            'idle' : [],
+            'idle' : {
+                'up' : [],
+                'down' : [],
+                'left' : [],
+                'right' : [],
+            },
             'move' : {
                 'up' : [],
                 'down' : [],
@@ -28,6 +33,23 @@ export class SpriteFacade {
             this.image[entity][subEntity][name].push(image)
         }
         let path = ''
+
+        for (let i = 0; i <= 5; i++) {
+            path = '../../assets/player/idle/up/sprite_' + i +'.png'
+            appendSpriteSubData('player','idle','up',path)
+            path = '../../assets/player/idle/left/sprite_' + i +'.png'
+            appendSpriteSubData('player','idle','left',path)
+        }
+        // assets/player/idle/down/sprite_0.png
+        for (let i = 0; i < 3; i++) {
+            path = '../../assets/player/idle/down/sprite_' + i +'.png'
+            appendSpriteSubData('player','idle','down',path)
+        }
+        for (let i = 0; i < 6; i++) {
+            path = '../../assets/player/idle/right/sprite_' + i +'.png'
+            appendSpriteSubData('player','idle','right',path)
+        }
+
         for (let i = 1; i <= 11; i++) {
             path = '../../assets/player/attack/attack_' + i +'.png'
             appendSpriteData('player','attack',path)
