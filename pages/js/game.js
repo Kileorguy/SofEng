@@ -1,6 +1,7 @@
 import {Game} from "../../scripts/gameLogic.js";
 import {FactorySingleton} from "../../scripts/singleton/allFactorySingleton.js";
 import {Laser} from "../../model/laser.js";
+import {SpriteFacade} from "../../scripts/facade/spriteFacade.js";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -18,6 +19,7 @@ window.onload = () =>{
 // }
 
 function startGame(){
+
     // kurang lebih ini buat init init variable gamenya
     let f = FactorySingleton.getInstance()
     const game = Game.getInstance()
@@ -37,6 +39,7 @@ function startGame(){
 
     // game.laser = new Laser(100,100)
     game.render()
+
 
     // game.mages.push(f.mageFact.createEntity(1001,100))
     // game.magics.push(new Magic(150,200))

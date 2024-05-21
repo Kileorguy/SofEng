@@ -18,6 +18,7 @@ export class PlayerDash extends State {
         this.v = 0
     }
     startState(){
+        this.player.spriteFrame = 0
         this.v = this.player.movementSpeed*this.#multiplier
 
     }

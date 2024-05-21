@@ -18,6 +18,7 @@ export class PlayerSummon extends State{
     }
 
     startState(){
+        this.player.spriteFrame = 0
         setTimeout(()=>{
             this.game.initMonkey(this.player.x + this.player.width/2-25,this.player.y-100)
             this.game.initMonkey(this.player.x + this.player.width/2-25,this.player.y+100+this.player.height/2)

@@ -10,6 +10,7 @@ export class PlayerBlock extends State{
 
     startState() {
         this.player.block = true
+        this.player.spriteFrame = 0
 
     }
     changeState() {
