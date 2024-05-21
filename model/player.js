@@ -14,6 +14,11 @@ export class Player extends Entity{
     #framesHold = 6
     #framesCurr = 0
     #framesMax = 3
+    #framesCounter = 0
+
+    #stateVal = 'idle'
+    spriteFrame = 0
+    #spriteLength = 3
 
     #dash_cooldown = 0.5
     #dash_counter = 0
@@ -51,6 +56,7 @@ export class Player extends Entity{
         this.block = false
         this.summon = false
         this.game = Game.getInstance()
+        this.sprites = this.game.facade.image['player']
         this.keydownListener = this.keydownListener.bind(this);
         this.keyupListener = this.keyupListener.bind(this);
         document.addEventListener('keydown', this.keydownListener);
@@ -72,18 +78,24 @@ export class Player extends Entity{
                 if(!atk && !dash && !summon) this.facing = 'a'
                 this.vx = -this.movementSpeed
                 this.keydown = true
+                this.spriteFrame = 0
+                this.#stateVal = 'move'
                 break
             }
             case 'arrowright':{
                 if(!atk && !dash && !summon) this.facing = 'd'
                 this.vx = this.movementSpeed
                 this.keydown = true
+                this.spriteFrame = 0
+                this.#stateVal = 'move'
                 break
             }
             case 'arrowup':{
                 if(!atk && !dash && !summon) this.facing = 'w'
                 this.vy = -this.movementSpeed
                 this.keydown = true
+                this.spriteFrame = 0
+                this.#stateVal = 'move'
                 break
             }
             case 'arrowdown':{
@@ -91,6 +103,8 @@ export class Player extends Entity{
                 this.vy = this.movementSpeed
 
                 this.keydown = true
+                this.spriteFrame = 0
+                this.#stateVal = 'move'
                 break
             }
             case 'q':{
@@ -99,6 +113,8 @@ export class Player extends Entity{
                 if(cooldownValidation(this.#atk_counter, this.#atk_cooldown)){
                     this.state.changeState(new PlayerAttack(this))
                     this.#atk_counter = 0
+                    this.spriteFrame = 0
+                    this.#stateVal = 'attack'
                 }
                 break
             }
@@ -107,6 +123,8 @@ export class Player extends Entity{
                     && !this.block ){
                     this.state.changeState(new PlayerDash(this))
                     this.#dash_counter = 0
+                    this.spriteFrame = 0
+                    this.#stateVal = 'attack'
                 }
 
                 break
@@ -114,6 +132,8 @@ export class Player extends Entity{
             case 'e':{
                 if(!this.dash && !this.block)
                 this.state.changeState(new PlayerSummon(this))
+                this.spriteFrame = 0
+                this.#stateVal = 'attack'
                 break
             }
             case 'd':{
@@ -121,6 +141,8 @@ export class Player extends Entity{
                     && !this.block){
                     this.state.changeState(new PlayerBlock(this))
                     this.#block_counter = 0
+                    this.spriteFrame = 0
+                    this.#stateVal = 'attack'
                     // console.log("block")
                 }
                 break
@@ -141,18 +163,21 @@ export class Player extends Entity{
 
                 if(this.vx === this.movementSpeed){
                     this.vx = 0
+
                 }
                 break
             }
             case 'arrowup':{
                 if(this.vy === -this.movementSpeed){
                     this.vy = 0
+
                 }
                 break
             }
             case 'arrowdown':{
                 if(this.vy === this.movementSpeed){
                     this.vy = 0
+
                 }
                 break
             }
@@ -175,88 +200,121 @@ export class Player extends Entity{
         }
     }
 
+    checkCollision = (x,y,width,height) =>{
+        let game = Game.getInstance()
+        let enemy = game.enemy
+        let mages = game.mages
+        if (x < enemy.x + enemy.width &&
+            x + width > enemy.x &&
+            y < enemy.y + enemy.height &&
+            y + height > enemy.y) {
+            enemy.takeDamage(10,true)
+        }
 
+        for (let mage of mages) {
+            if (
+                x < mage.x + mage.width &&
+                x + width > mage.x &&
+                y < mage.y + mage.height &&
+                y + height > mage.y
+            ) {
+                mage.takeDamage(10,true)
+            }
+        }
+
+
+    }
     interval
     drawSelf(ctx){
-        const checkCollision = (x,y,width,height) =>{
-            let game = Game.getInstance()
-            let enemy = game.enemy
-            let mages = game.mages
-            // console.log(x,enemy.x)
-            // console.log(x+width, enemy.x+width)
-            // 324.5    289.8
-            // 404.5    369.8
-            if (x < enemy.x + enemy.width &&
-                x + width > enemy.x &&
-                y < enemy.y + enemy.height &&
-                y + height > enemy.y) {
-                enemy.takeDamage(10,true)
-            }
 
-            for (let mage of mages) {
-                if (
-                    x < mage.x + mage.width &&
-                    x + width > mage.x &&
-                    y < mage.y + mage.height &&
-                    y + height > mage.y
-                ) {
-                    // console.log('test')
-                    mage.takeDamage(10,true)
-                }
-            }
-
-
-        }
         // console.log(this.HP)
         if(this.attacking && this.#framesCurr === 2){
             this.attacking = false
             this.#framesCurr=0
             this.#framesElapsed=0
+            this.#framesCounter = 0
+            this.spriteFrame=0
+            this.#stateVal = 'move'
         }
-
-        // console.log(this.attacking)
-
+        console.log(this.spriteFrame)
         if(!this.block) ctx.fillStyle = 'blue'
         else ctx.fillStyle = 'cyan'
-        ctx.fillRect(this.x,this.y,this.width,this.height)
+        // ctx.fillRect(this.x,this.y,this.width,this.height)
 
-        if(this.attacking === false) return
 
-        this.#framesElapsed ++;
-
-        if(this.#framesElapsed % this.#framesHold === 0){
-
-            // console.log(this.#framesElapsed,this.#framesCurr,this.#framesMax-1,this.#framesHold)
-            if(this.#framesCurr < this.#framesMax - 1){
-                this.#framesCurr+=1
-            }else{
-                // this.#framesCurr=0
+        if(this.state instanceof PlayerAttack){
+            this.#stateVal = 'attack'
+            this.#spriteLength = this.sprites['attack'].length
+            ctx.drawImage(this.sprites['attack'][this.spriteFrame],this.x,this.y,this.width,this.height)
+        }else if(this.state instanceof PlayerDefault){
+            this.#stateVal = 'idle'
+            if(this.facing ==='a'){
+                this.#spriteLength = this.sprites['idle']['left'].length
+                ctx.drawImage(this.sprites['idle']['left'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='d'){
+                this.#spriteLength = this.sprites['idle']['right'].length
+                ctx.drawImage(this.sprites['idle']['right'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='w'){
+                this.#spriteLength = this.sprites['idle']['up'].length
+                ctx.drawImage(this.sprites['idle']['up'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='s'){
+                this.#spriteLength = this.sprites['idle']['down'].length
+                ctx.drawImage(this.sprites['idle']['down'][this.spriteFrame],this.x,this.y,this.width,this.height)
             }
         }
-        ctx.fillStyle = 'gray'
 
-        if(this.facing ==='a'){
-            let atkX = this.x-this.atkW;
-            let atkY = this.y;
-            ctx.fillRect(atkX, atkY, this.atkW,this.atkH)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
-        }else if(this.facing ==='d'){
-            let atkX = this.x+this.width;
-            let atkY = this.y;
-            ctx.fillRect(atkX, atkY, this.atkW,this.atkH)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
 
-        }else if(this.facing ==='w'){
-            let atkX = this.x
-            let atkY = this.y-this.atkW
-            ctx.fillRect(atkX, atkY,this.atkH,this.atkW)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
 
-        }else if(this.facing ==='s'){
-            let atkX = this.x
-            let atkY = this.y+this.height
-            ctx.fillRect(atkX, atkY,this.atkH,this.atkW)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
+        this.#framesCounter += 1
+
+        if(this.#framesCounter % this.#framesHold === 0){
+            // if(this.#framesCurr < this.#framesMax - 1){
+            // this.#framesCurr+=1
+
+            if(this.#stateVal === 'move'){
+                console.log(this.sprites[this.#stateVal]['up'].length)
+                this.spriteFrame = (this.spriteFrame + 1) % this.#spriteLength
+
+            }else{
+                this.spriteFrame = (this.spriteFrame + 1) % this.#spriteLength
+
+            }
+
+            // }
+        }
+
+        if(this.attacking === true) {
+            this.#framesElapsed ++;
+
+            if(this.#framesElapsed % this.#framesHold === 0){
+                // if(this.#framesCurr < this.#framesMax - 1){
+                this.#framesCurr+=1
+                // this.spriteFrame+=1
+                // this.spriteFrame = (this.spriteFrame + 1) % this.sprites[this.#stateVal].length
+
+                // }
+            }
+            ctx.fillStyle = 'gray'
+            let atkX, atkY,atkW = this.atkW, atkH = this.atkH
+            if(this.facing ==='a'){
+                atkX = this.x-this.atkW;
+                atkY = this.y;
+                atkW = this.atkH
+                atkH = this.atkW
+            }else if(this.facing ==='d'){
+                atkX = this.x+this.width;
+                atkY = this.y;
+                atkW = this.atkH
+                atkH = this.atkW
+            }else if(this.facing ==='w'){
+                atkX = this.x
+                atkY = this.y-this.atkW
+            }else if(this.facing ==='s'){
+                atkX = this.x
+                atkY = this.y+this.height
+            }
+            ctx.fillRect(atkX, atkY,atkH,atkW)
+            this.checkCollision(atkX,atkY,atkW,atkH)
         }
 
     }
