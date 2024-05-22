@@ -131,15 +131,19 @@
   
   .popup .content {
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
+    font-family: 'Irish Grover';
     transform: translate(-50%, -50%) scale(0);
-    background: #fff;
-    width: 450px;
-    height: 220px;
+    background: rgba(255, 255, 255, 0.75);
+    width: 750px;
+    height: 500px;
     z-index: 2;
-    text-align: center;
-    padding: 20px;
+    font-size: 30px;
+    font-weight: 20;
+    line-height: 30px;
+    text-align: left;
+    padding: 50px;
     box-sizing: border-box;
   }
   
@@ -156,6 +160,7 @@
     line-height: 30px;
     text-align: center;
     border-radius: 50%;
+    cursor: pointer;
   }
   
   /* .popup.active .overlay {
