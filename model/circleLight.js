@@ -6,13 +6,19 @@ export class CircleLight {
     #cooldown = 1
     #radian = 0
     #counter = 0
-    #radius = 15
+    #radius = 50
     follow = true
+    #spriteLength = 1
+    spriteFrame = 0
+    #framesCounter = 0
+    #framesHold = 8
 
     constructor(x,y) {
         this.x = x
         this.y = y
         // console.log(x,y)
+        this.game = Game.getInstance()
+        this.sprites = this.game.facade.image['circleLight']
     }
     move(player){
         let px = player.x + player.width/2
@@ -40,9 +46,17 @@ export class CircleLight {
 
     }
     drawSelf(ctx){
-        ctx.fillStyle = 'cyan'
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.#radius, 0, 2 * Math.PI);
-        ctx.fill()
+        
+        this.#spriteLength = this.sprites['orb']['orb'].length
+        this.spriteFrame %= this.sprites['orb']['orb'].length
+        ctx.drawImage(this.sprites['orb']['orb'][this.spriteFrame],this.x,this.y,this.#radius,this.#radius)
+        
+        this.#framesCounter += 1
+
+        if(this.#framesCounter % this.#framesHold === 0){
+
+            this.spriteFrame = (this.spriteFrame + 1) % this.#spriteLength
+        }
+
     }
 }

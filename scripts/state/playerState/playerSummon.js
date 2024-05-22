@@ -29,7 +29,7 @@ export class PlayerSummon extends State{
         // console.log(this.#_timer/60)
 
 
-        if(this.#_timer>=60*0.5){
+        if(this.#_timer>=12*8){
             this.changeState(new PlayerDefault(this.player))
         }
 
