@@ -7,7 +7,7 @@ import {cooldownValidation} from "../helper/frameRateHelper.js";
 
 export class Enemy extends Entity{
     state
-    #immune_timer = 0.2
+    #immune_timer = 0.4
     #immune_counter = 0
 
     /**

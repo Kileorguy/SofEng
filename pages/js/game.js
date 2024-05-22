@@ -6,8 +6,12 @@ import {SpriteFacade} from "../../scripts/facade/spriteFacade.js";
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
 const cvsWidth = canvas.offsetWidth
 const cvsHeight = canvas.offsetHeight
+
 
 window.onload = () =>{
     startGame()

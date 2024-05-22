@@ -11,7 +11,7 @@ import {cooldownValidation} from "../helper/frameRateHelper.js";
 export class Player extends Entity{
     movementSpeed = 8
     #framesElapsed = 0
-    #framesHold = 6
+    #framesHold = 8
     #framesCurr = 0
     #framesMax = 3
     #framesCounter = 0
@@ -250,15 +250,20 @@ export class Player extends Entity{
             this.#stateVal = 'idle'
             if(this.facing ==='a'){
                 this.#spriteLength = this.sprites['idle']['left'].length
+                this.spriteFrame %= this.sprites['idle']['left'].length
                 ctx.drawImage(this.sprites['idle']['left'][this.spriteFrame],this.x,this.y,this.width,this.height)
             }else if(this.facing ==='d'){
                 this.#spriteLength = this.sprites['idle']['right'].length
+                this.spriteFrame %= this.sprites['idle']['right'].length
                 ctx.drawImage(this.sprites['idle']['right'][this.spriteFrame],this.x,this.y,this.width,this.height)
             }else if(this.facing ==='w'){
                 this.#spriteLength = this.sprites['idle']['up'].length
+                this.spriteFrame %= this.sprites['idle']['up'].length
                 ctx.drawImage(this.sprites['idle']['up'][this.spriteFrame],this.x,this.y,this.width,this.height)
             }else if(this.facing ==='s'){
                 this.#spriteLength = this.sprites['idle']['down'].length
+                this.spriteFrame %= this.sprites['idle']['down'].length
+
                 ctx.drawImage(this.sprites['idle']['down'][this.spriteFrame],this.x,this.y,this.width,this.height)
             }
         }

@@ -9,7 +9,7 @@ export class Mage extends Entity {
         this.state = new MageAttack(this)
         this.state.startState()
     }
-    #immune_timer = 0.2
+    #immune_timer = 0.4
     #immune_counter = 0
     move(){
         this.state.updateState()
