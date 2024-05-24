@@ -236,7 +236,7 @@ export class Player extends Entity{
             this.spriteFrame=0
             this.#stateVal = 'idle'
         }
-        console.log(this.spriteFrame)
+        // console.log(this.spriteFrame)
         if(!this.block) ctx.fillStyle = 'blue'
         else ctx.fillStyle = 'cyan'
         // ctx.fillRect(this.x,this.y,this.width,this.height)
@@ -337,7 +337,7 @@ export class Player extends Entity{
             // this.#framesCurr+=1
 
             if(this.#stateVal === 'move'){
-                console.log(this.sprites[this.#stateVal]['up'].length)
+                // console.log(this.sprites[this.#stateVal]['up'].length)
                 this.spriteFrame = (this.spriteFrame + 1) % this.#spriteLength
 
             }else{

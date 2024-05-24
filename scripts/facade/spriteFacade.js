@@ -310,7 +310,7 @@ export class SpriteFacade {
 
     constructor() {
         this.loadImages()
-        console.log("a")
+        // console.log("a")
     }
 
 

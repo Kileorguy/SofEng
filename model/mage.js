@@ -21,6 +21,8 @@ export class Mage extends Entity {
     #framesHold = 8
 
     move(){
+        this.#immune_counter+=1
+
         this.state.updateState()
     }
     drawSelf(ctx){

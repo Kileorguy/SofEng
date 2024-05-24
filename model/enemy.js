@@ -5,6 +5,7 @@ import {EnemyMagic} from "../scripts/state/enemyState/enemyMagic.js";
 import {EnemyLaser} from "../scripts/state/enemyState/enemyLaser.js";
 import {cooldownValidation} from "../helper/frameRateHelper.js";
 import { Game } from "../scripts/gameLogic.js";
+import {EnemyWalk} from "../scripts/state/enemyState/enemyWalk.js";
 
 export class Enemy extends Entity{
     state
@@ -29,19 +30,22 @@ export class Enemy extends Entity{
         this.sprites = this.game.facade.image['enemy1']
 
         // this.state = new EnemyIdle(this)
-        this.state = new EnemySummon(this)
+        this.state = new EnemyMagic(this)
         this.vx = 6
 
     }
 
     drawSelf(ctx){
+        console.log(this.state)
+
         this.#immune_counter++
 
-        if(this.state instanceof EnemyIdle){
+
+        if(this.state instanceof EnemyIdle || this.state instanceof EnemyWalk || this.state instanceof EnemySummon){
             this.#spriteLength = this.sprites['idle']['idle'].length
             this.spriteFrame %= this.sprites['idle']['idle'].length
             ctx.drawImage(this.sprites['idle']['idle'][this.spriteFrame],this.x,this.y,this.width,this.height)
-        }else if(this.state instanceof EnemyMagic){
+        }else if(this.state instanceof EnemyMagic ){
             this.#spriteLength = this.sprites['attack']['attack'].length
             this.spriteFrame %= this.sprites['attack']['attack'].length
             ctx.drawImage(this.sprites['attack']['attack'][this.spriteFrame],this.x,this.y,this.width,this.height)

@@ -92,8 +92,15 @@ export class Magic {
 
         this.#spriteLength = this.sprites['magic']['magic'].length
         this.spriteFrame %= this.sprites['magic']['magic'].length
-        ctx.drawImage(this.sprites['magic']['magic'][this.spriteFrame],this.x,this.y,this._radius,this._radius)
-        
+
+        // ctx.fillRect(this.x,this.y,this._radius,this._radius)
+        ctx.save();
+
+        ctx.translate(this.x,this.y);
+        ctx.rotate(this.#radian + Math.PI / 2);
+        ctx.drawImage(this.sprites['magic']['magic'][this.spriteFrame],-this._radius/2,-this._radius/2,this._radius,this._radius)
+        ctx.restore();
+
         this.#framesCounter += 1
 
         if(this.#framesCounter % this.#framesHold === 0){
