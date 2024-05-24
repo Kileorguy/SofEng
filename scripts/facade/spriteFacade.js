@@ -253,18 +253,74 @@ export class SpriteFacade {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // Rangda ATTACK : attack
+        // Rangda1 ATTACK : attack
         for (let i = 0; i <= 7; i++) {
 
             path = '../../assets/rangdap1/attack/attack/sprite_' + i +'.png'
             appendSpriteSubData('enemy1','attack','attack',path)
 
         }
-        // Rangda IDLE : idle
+        // Rangda1 IDLE : idle
         for (let i = 0; i <= 15; i++) {
 
             path = '../../assets/rangdap1/idle/idle/sprite_' + i.toString().padStart(2,'0') +'.png'
             appendSpriteSubData('enemy1','idle','idle',path)
+
+        }
+
+        // Rangda2 IDLE : idle
+        for (let i = 0; i <= 5; i++) {
+
+            path = '../../assets/rangdap2/idle/idle/sprite_' + i +'.png'
+            appendSpriteSubData('enemy2','idle','idle',path)
+
+        }
+
+        // Rangda2 ATTACK : attack
+        for (let i = 0; i <= 7; i++) {
+
+            path = '../../assets/rangdap2/attack/attack/sprite_' + i +'.png'
+            appendSpriteSubData('enemy2','attack','attack',path)
+
+        }
+
+        // Rangda2 SUMMON : summon
+        for (let i = 0; i <= 16; i++) {
+
+            path = '../../assets/rangdap2/summon/summon/sprite_' + i.toString().padStart(2,'0') +'.png'
+            appendSpriteSubData('enemy2','summon','summon',path)
+
+        }
+
+        // Rangda3 IDLE : idle
+        for (let i = 0; i <= 2; i++) {
+
+            path = '../../assets/rangdap3/idle/idle/sprite_' + i +'.png'
+            appendSpriteSubData('enemy3','idle','idle',path)
+
+        }
+
+        // Rangda3 ATTACK : attack
+        for (let i = 0; i <= 7; i++) {
+
+            path = '../../assets/rangdap3/attack/attack/sprite_' + i +'.png'
+            appendSpriteSubData('enemy3','attack','attack',path)
+
+        }
+
+        // Rangda3 SUMMON : summon
+        for (let i = 0; i <= 16; i++) {
+
+            path = '../../assets/rangdap3/summon/summon/sprite_' + i.toString().padStart(2,'0') +'.png'
+            appendSpriteSubData('enemy3','summon','summon',path)
+
+        }
+
+        // Rangda3  LASER : laser
+        for (let i = 0; i <= 19; i++) {
+
+            path = '../../assets/rangdap3/laser/laser/sprite_' + i.toString().padStart(2,'0') +'.png'
+            appendSpriteSubData('enemy3','laser','laser',path)
 
         }
 

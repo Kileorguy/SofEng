@@ -27,7 +27,15 @@ export class Enemy extends Entity{
     constructor(HP,x,y,width,height) {
         super(HP,x,y,width,height);
         this.game = Game.getInstance()
-        this.sprites = this.game.facade.image['enemy1']
+
+        // IF PHASE 1
+        // this.sprites = this.game.facade.image['enemy1']
+
+        // IF PHASE 2
+        // this.sprites = this.game.facade.image['enemy2']
+
+        // IF PHASE 3
+        this.sprites = this.game.facade.image['enemy3']
 
         // this.state = new EnemyIdle(this)
         this.state = new EnemyMagic(this)
@@ -41,7 +49,37 @@ export class Enemy extends Entity{
         this.#immune_counter++
 
 
-        if(this.state instanceof EnemyIdle || this.state instanceof EnemyWalk || this.state instanceof EnemySummon){
+        // IF PHASE 1
+        // if(this.state instanceof EnemyIdle || this.state instanceof EnemyWalk || this.state instanceof EnemySummon){
+        //     this.#spriteLength = this.sprites['idle']['idle'].length
+        //     this.spriteFrame %= this.sprites['idle']['idle'].length
+        //     ctx.drawImage(this.sprites['idle']['idle'][this.spriteFrame],this.x,this.y,this.width,this.height)
+        // }else if(this.state instanceof EnemyMagic ){
+        //     this.#spriteLength = this.sprites['attack']['attack'].length
+        //     this.spriteFrame %= this.sprites['attack']['attack'].length
+        //     ctx.drawImage(this.sprites['attack']['attack'][this.spriteFrame],this.x,this.y,this.width,this.height)
+        // }
+
+        // IF PHASE 2
+        // if(this.state instanceof EnemyIdle || this.state instanceof EnemyWalk){
+        //     this.#spriteLength = this.sprites['idle']['idle'].length
+        //     this.spriteFrame %= this.sprites['idle']['idle'].length
+        //     ctx.drawImage(this.sprites['idle']['idle'][this.spriteFrame],this.x,this.y,this.width,this.height)
+        // }else if(this.state instanceof EnemyMagic ){
+        //     this.#spriteLength = this.sprites['attack']['attack'].length
+        //     this.spriteFrame %= this.sprites['attack']['attack'].length
+        //     ctx.drawImage(this.sprites['attack']['attack'][this.spriteFrame],this.x,this.y,this.width,this.height)
+        // }
+        // if(this.state instanceof EnemySummon){
+        //     this.#spriteLength = this.sprites['summon']['summon'].length
+        //     this.spriteFrame %= this.sprites['summon']['summon'].length
+        //     ctx.drawImage(this.sprites['summon']['summon'][this.spriteFrame],this.x,this.y,this.width,this.height)
+        // }
+
+        
+
+        // IF PHASE 3
+        if(this.state instanceof EnemyIdle || this.state instanceof EnemyWalk){
             this.#spriteLength = this.sprites['idle']['idle'].length
             this.spriteFrame %= this.sprites['idle']['idle'].length
             ctx.drawImage(this.sprites['idle']['idle'][this.spriteFrame],this.x,this.y,this.width,this.height)
@@ -50,6 +88,17 @@ export class Enemy extends Entity{
             this.spriteFrame %= this.sprites['attack']['attack'].length
             ctx.drawImage(this.sprites['attack']['attack'][this.spriteFrame],this.x,this.y,this.width,this.height)
         }
+        if(this.state instanceof EnemySummon){
+            this.#spriteLength = this.sprites['summon']['summon'].length
+            this.spriteFrame %= this.sprites['summon']['summon'].length
+            ctx.drawImage(this.sprites['summon']['summon'][this.spriteFrame],this.x,this.y,this.width,this.height)
+        }
+        if(this.state instanceof EnemyLaser){
+            this.#spriteLength = this.sprites['laser']['laser'].length
+            this.spriteFrame %= this.sprites['laser']['laser'].length
+            ctx.drawImage(this.sprites['laser']['laser'][this.spriteFrame],this.x,this.y,this.width,this.height)
+        }
+
 
         this.#framesCounter += 1
 
