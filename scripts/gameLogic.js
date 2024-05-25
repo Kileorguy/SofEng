@@ -57,7 +57,7 @@ export class Game {
     drawHealth(ctx){
         if(this.player){
             ctx.font = '30px Arial'
-            ctx.fillStyle = 'green'
+            ctx.fillStyle = 'white'
             ctx.fillText(this.player.HP,10,50,100,100)
             ctx.fillStyle = 'red'
             ctx.fillText(this.enemy.HP,10,100,100,100)
