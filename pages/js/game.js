@@ -14,7 +14,9 @@ const cvsHeight = canvas.offsetHeight
 
 
 window.onload = () =>{
+
     startGame()
+    // console.log('test')
 }
 
 // function initEntities(){
@@ -23,6 +25,7 @@ window.onload = () =>{
 // }
 
 function startGame(){
+
 
     // kurang lebih ini buat init init variable gamenya
     let f = FactorySingleton.getInstance()

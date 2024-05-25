@@ -1,5 +1,7 @@
 import {State} from "../state.js";
 import {Game} from "../../gameLogic.js";
+import {SecondGameState} from "./secondGameState.js";
+import {FactorySingleton} from "../../singleton/allFactorySingleton.js";
 
 
 export class FirstGameState extends State{
@@ -66,8 +68,9 @@ export class FirstGameState extends State{
         if(game.laser) game.laser.drawSelf(game.ctx,game.player)
     }
     changeState(){
+        this.game.state = new SecondGameState(this.game)
+        this.game.state.startState();
 
-        // this.game.state =
     }
 
 }
