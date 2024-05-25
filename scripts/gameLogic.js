@@ -31,7 +31,7 @@ export class Game {
     constructor() {
         this.fact = FactorySingleton.getInstance()
         this.state = new FirstGameState(this)
-        this.state.startState()
+
     }
     fps
     fpsInterval

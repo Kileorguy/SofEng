@@ -59,6 +59,10 @@ export class FirstGameState extends State{
         this.game.monkeys = []
         this.game.mages = []
         this.game.circleLights = []
+        let f = FactorySingleton.getInstance()
+        this.game.enemy = f.enemyFact.createEntity(Game.canvasWidth/5, Game.canvasHeight/2)
+        console.log('done create enemy')
+        this.game.enemy.state.startState()
     }
 
     updateState(){

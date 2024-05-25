@@ -41,8 +41,12 @@ function startGame(){
     game.player.state.startState()
 
     game.setFPS()
-    game.enemy = f.enemyFact.createEntity(cvsWidth/5, cvsHeight/2)
-    game.enemy.state.startState()
+
+    game.state.startState()
+
+    // let f = FactorySingleton.getInstance()
+    // this.game.enemy = f.enemyFact.createEntity(Game.canvasWidth/5, Game.canvasHeight/2)
+    // this.game.enemy.state.startState()
 
     // game.laser = new Laser(100,100)
     game.render()
