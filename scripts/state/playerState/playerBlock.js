@@ -10,6 +10,7 @@ export class PlayerBlock extends State{
 
     startState() {
         this.player.block = true
+        this.player.spriteFrame = 0
 
     }
     changeState() {
@@ -20,7 +21,7 @@ export class PlayerBlock extends State{
     }
     updateState() {
         this.#counter++
-        if(this.#counter>=60*0.8) this.changeState()
+        if(this.#counter>=110) this.changeState()
     }
 
 }

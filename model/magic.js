@@ -3,13 +3,17 @@ import {getEuclidean} from "../helper/distanceHelper.js";
 
 export class Magic {
     v = 15
-    _radius = 20
+    _radius = 60
     #deltaTime
     #previousTime
     #currentTime
     #timer = 0.7
     #radian = 0
     follow = true
+    #spriteLength = 1
+    spriteFrame = 0
+    #framesCounter = 0
+    #framesHold = 8
 
     /**
      *
@@ -17,10 +21,11 @@ export class Magic {
      * @param y : number
      */
     constructor(x,y) {
-        let game = Game.getInstance()
+        this.game = Game.getInstance()
+        this.sprites = this.game.facade.image['magic']
         this.x = x
         this.y = y
-        this.player = game.player
+        this.player = this.game.player
         this.px = this.player.x + this.player.width/2
         this.py = this.player.y + this.player.height/2
         this.#previousTime = performance.now()
@@ -84,12 +89,23 @@ export class Magic {
     }
 
     render(ctx){
-        ctx.fillStyle = 'purple'
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this._radius, 0, 2 * Math.PI);
-        ctx.fill()
+
+        this.#spriteLength = this.sprites['magic']['magic'].length
+        this.spriteFrame %= this.sprites['magic']['magic'].length
+
+        // ctx.fillRect(this.x,this.y,this._radius,this._radius)
+        ctx.save();
+
+        ctx.translate(this.x,this.y);
+        ctx.rotate(this.#radian + Math.PI / 2);
+        ctx.drawImage(this.sprites['magic']['magic'][this.spriteFrame],-this._radius/2,-this._radius/2,this._radius,this._radius)
+        ctx.restore();
+
+        this.#framesCounter += 1
+
+        if(this.#framesCounter % this.#framesHold === 0){
+
+            this.spriteFrame = (this.spriteFrame + 1) % this.#spriteLength
+        }
     }
-
-
-
 }

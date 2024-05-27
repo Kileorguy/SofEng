@@ -7,6 +7,8 @@ export class PlayerDefault extends State{
         this.player = player
     }
     startState() {
+        this.player.spriteFrame = 0
+
     }
     changeState(state) {
         this.player.state = state
