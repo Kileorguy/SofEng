@@ -230,7 +230,7 @@ export class Player extends Entity{
     drawSelf(ctx){
 
         // console.log(this.HP)
-        if(this.attacking && this.#attack_timer>=20){
+        if(this.attacking && this.#attack_timer>=48){
             this.#attack_timer=0
             this.attacking = false
             this.#framesCurr=0
