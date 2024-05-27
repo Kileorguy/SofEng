@@ -41,7 +41,10 @@ export class ThirdGameState extends State{
         game.mages.forEach((m,index)=>{
             m.move()
             m.drawSelf(game.ctx)
-            if(m.HP<=0) game.mages.splice(index,1)
+            if(m.HP<=0) {
+                game.mages.splice(index, 1)
+                Game.mageCounter -= 1
+            }
         })
 
         game.circleLights.forEach((c,idx)=>{

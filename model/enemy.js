@@ -38,13 +38,13 @@ export class Enemy extends Entity{
         this.sprites = this.game.facade.image['enemy3']
 
         // this.state = new EnemyIdle(this)
-        this.state = new EnemyMagic(this)
+        this.state = new EnemyLaser(this)
         this.vx = 6
 
     }
 
     drawSelf(ctx){
-        console.log(this.state)
+        // console.log(this.state)
 
         this.#immune_counter++
 
