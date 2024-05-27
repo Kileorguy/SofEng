@@ -23,7 +23,7 @@ export class EnemyLaser extends State{
         this.#start = 0.5
         let enemy = this.game.enemy
 
-        this.laser = new Laser(enemy.x + enemy.width, enemy.y + enemy.height/2)
+        this.laser = new Laser(enemy.x + enemy.width/2, enemy.y+enemy.height/3)
 
     }
     updateState(){

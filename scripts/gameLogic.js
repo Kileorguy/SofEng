@@ -79,7 +79,6 @@ export class Game {
     }
 
     moveLogic(){
-        // console.log(Game.mageCounter)
         if(this.enemy)this.enemy.drawSelf(this.ctx)
 
         this.player.move()
@@ -105,7 +104,10 @@ export class Game {
         this.mages.forEach((m,index)=>{
             m.move()
             m.drawSelf(this.ctx)
-            if(m.HP<=0) this.mages.splice(index,1)
+            if(m.HP<=0) {
+                this.mages.splice(index,1)
+                Game.mageCounter-=1
+            }
         })
 
         this.circleLights.forEach((c,idx)=>{

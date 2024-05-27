@@ -23,6 +23,8 @@ export class Player extends Entity{
     #dash_cooldown = 0.5
     #dash_counter = 0
 
+    #attack_timer = 0
+
     #block_cooldown = 5
     #block_counter = this.#block_cooldown * 60
 
@@ -228,7 +230,8 @@ export class Player extends Entity{
     drawSelf(ctx){
 
         // console.log(this.HP)
-        if(this.attacking && this.#framesCurr === 2){
+        if(this.attacking && this.#attack_timer>=20){
+            this.#attack_timer=0
             this.attacking = false
             this.#framesCurr=0
             this.#framesElapsed=0
@@ -349,6 +352,7 @@ export class Player extends Entity{
         }
 
         if(this.attacking === true) {
+            this.#attack_timer+=1
             this.#framesElapsed ++;
 
             if(this.#framesElapsed % this.#framesHold === 0){
