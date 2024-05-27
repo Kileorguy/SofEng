@@ -144,7 +144,7 @@ export class SpriteFacade {
         }
 
         // Player ATTACK : up down left right
-        for (let i = 1; i <= 5; i++) {
+        for (let i = 1; i <= 6; i++) {
 
             path = '../../assets/player/attack/up/sprite_' + i +'.png'
             appendSpriteSubData('player','attack','up',path)
