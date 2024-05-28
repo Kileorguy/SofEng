@@ -125,7 +125,7 @@ export class Game {
         this.elapsed = this.now - this.then
         if(this.elapsed > this.fpsInterval){
             this.then = this.now - (this.elapsed % this.fpsInterval)
-            clearCanvas(this.ctx)
+            clearCanvas(this.ctx,this.facade.image['bg'])
             this.drawHealth(this.ctx)
 
             // this.moveLogic()

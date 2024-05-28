@@ -1,6 +1,7 @@
 export class SpriteFacade {
 
     image = {
+        bg : null,
         player : {
             'attack' : {
                 'up' : [],
@@ -112,6 +113,10 @@ export class SpriteFacade {
 
 
     loadImages(){
+        let image = new Image()
+        image.src = '/assets/backgrounds/test.jpg'
+        console.log(image)
+        this.image['bg'] = image
         const appendSpriteData = (entity,name,path) => {
             let image = new Image()
             image.src = path
