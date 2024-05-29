@@ -11,7 +11,7 @@ import {SecondGameState} from "../scripts/state/gameState/secondGameState.js";
 
 export class Enemy extends Entity{
     state
-    #immune_timer = 0.4
+    #immune_timer = 0.48
     #immune_counter = 0
     #stateVal = ''
     #spriteLength = 1
@@ -39,7 +39,7 @@ export class Enemy extends Entity{
         // IF PHASE 3
         this.sprites = this.game.facade.image['enemy3']
 
-        this.state = new EnemyIdle(this)
+        this.state = new EnemySummon(this)
         // this.state = new EnemyLaser(this)
         this.vx = 6
 
@@ -119,10 +119,13 @@ export class Enemy extends Entity{
 
     }
 
-    takeDamage(hp, continuous = false){
-        if(cooldownValidation(this.#immune_counter,this.#immune_timer) || !continuous){
+    takeDamage(hp, player = false){
+        if(cooldownValidation(this.#immune_counter,this.#immune_timer)){
             this.HP -= hp
             this.#immune_counter=0
+            if(player){
+                this.game.player.increaseCounter()
+            }
         }
     }
 }

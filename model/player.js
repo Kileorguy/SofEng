@@ -28,8 +28,11 @@ export class Player extends Entity{
     #block_cooldown = 5
     #block_counter = this.#block_cooldown * 60
 
-    #atk_cooldown = 0.5
+    #atk_cooldown = 0.75
     #atk_counter = 0
+
+    #summon_cooldown = 5
+    #summon_counter =0
 
     #immune_timer = 0.2
     #immune_counter = 0
@@ -132,10 +135,11 @@ export class Player extends Entity{
                 break
             }
             case 'e':{
-                if(!this.dash && !this.block)
-                this.state.changeState(new PlayerSummon(this))
-                
-                this.#stateVal = 'spawn'
+                if(!this.dash && !this.block && this.#summon_counter >= this.#summon_cooldown){
+                    this.#summon_counter=0
+                    this.state.changeState(new PlayerSummon(this))
+                    this.#stateVal = 'spawn'
+                }
                 break
             }
             case 'd':{
@@ -202,6 +206,10 @@ export class Player extends Entity{
         }
     }
 
+    increaseCounter(){
+        this.#summon_counter++
+    }
+
     checkCollision = (x,y,width,height) =>{
         let game = Game.getInstance()
         let enemy = game.enemy
@@ -228,9 +236,10 @@ export class Player extends Entity{
     }
     interval
     drawSelf(ctx){
+        console.log(this.#summon_counter)
 
         // console.log(this.HP)
-        if(this.attacking && this.#attack_timer>=48){
+        if(this.attacking && this.#attack_timer>=44){
             this.#attack_timer=0
             this.attacking = false
             this.#framesCurr=0
@@ -394,7 +403,7 @@ export class Player extends Entity{
     }
      move(){
 
-        this.#dash_counter++; this.#block_counter++; this.#atk_counter++; this.#immune_counter++
+        this.#dash_counter++; this.#block_counter++; this.#atk_counter++; this.#immune_counter++;
         if(this.dash || this.block || this.summon) return
          // priority facing
         let vx = this.vx

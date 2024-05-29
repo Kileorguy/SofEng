@@ -17,7 +17,7 @@ export class EnemyFactory extends EntityFactory{
     createEntity(x,y){
         // super.createEntity();
         // return new Enemy(300, cvsWidth / 5, cvsHeight / 2, 150, 150)
-        return new Enemy(300, x,y, 150, 150)
+        return new Enemy(250, x,y, 150, 150)
     }
 
 

@@ -2,8 +2,8 @@ import {Game} from "../scripts/gameLogic.js";
 
 export function clearCanvas(ctx,img) {
     // let game = Game.getInstance()
-    // ctx.fillStyle = "green"
-    // ctx.fillRect(0,0,Game.canvasWidth,Game.canvasHeight)
+    ctx.fillStyle = "green"
+    ctx.fillRect(0,0,Game.canvasWidth,Game.canvasHeight)
 
 
 
@@ -14,7 +14,7 @@ export function clearCanvas(ctx,img) {
     // image.onload = drawImageActualSize;
 
     // image.src = "/assets/backgrounds/test.jpg";
-    ctx.drawImage(img, 0, 0, Game.canvasWidth,Game.canvasHeight);
+    // ctx.drawImage(img, 0, 0, Game.canvasWidth,Game.canvasHeight);
     // function drawImageActualSize()
     // {
     //     canvas.width = Game.canvasWidth;

@@ -40,7 +40,7 @@ export class EnemySummon extends State{
             }
             let x = eX + randX * multi;
             let y = eY+randY*multi1;
-            if(x < 0 || y < 0 || x > Game.canvasWidth || y > Game.canvasHeight){
+            if(x < 0 || y < 0 || x > Game.canvasWidth - w || y > Game.canvasHeight - h){
                 i--
                 continue
             }

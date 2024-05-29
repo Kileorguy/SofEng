@@ -18,7 +18,7 @@ export class PlayerAttack extends State{
 
     updateState(){
         this.#counter += 1
-        if(this.#counter>=48){
+        if(this.#counter>=44){
             this.changeState(new PlayerDefault(this.player))
         }
 
