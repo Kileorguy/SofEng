@@ -136,13 +136,9 @@ export class Game {
         }
         this.animation = requestAnimationFrame(this.render.bind(this))
         if(this.enemy.HP <=0){
-            if (this.state instanceof ThirdGameState){
-                cancelAnimationFrame(this.animation)
-                clearCanvas(this.ctx)
-            }else{
+                // cancelAnimationFrame(this.animation)
+                // clearCanvas(this.ctx)
                 this.state.changeState()
-                this.state.startState()
-            }
         }
 
     }

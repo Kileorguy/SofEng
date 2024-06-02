@@ -22,7 +22,14 @@
     <div class="outerGame">
         <canvas id="canvas" width=1920px height=960px></canvas>
     </div>
-
+    <div id="outerResult">
+        <h1 id = "resultStatus"></h1>
+        <form id = "gameForm">
+            <label for="usernameField">Input your username</label>
+            <input type="text" name="" id="usernameField" placeholder="username" max="20" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
     <script type="module" src='./js/game.js'></script>
 </body>
 </html>
