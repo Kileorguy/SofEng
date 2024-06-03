@@ -79,8 +79,13 @@ export class FirstGameState extends State{
 
     updateState(){
         if(!cooldownValidation(this.#counter,this.#transition_cooldown)){
-           this.#counter++
-            console.log(this.#counter)
+            this.#counter++
+            // this.moveLogic(this.game)
+            // console.log(this.#counter)
+            this.game.player.drawSelf(this.game.ctx)
+            if(this.game.enemy)this.game.enemy.drawSelf(this.game.ctx)
+
+
             return
         }
 
