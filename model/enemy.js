@@ -30,19 +30,27 @@ export class Enemy extends Entity{
         super(HP,x,y,width,height);
         this.game = Game.getInstance()
 
-        // IF PHASE 1
-        // this.sprites = this.game.facade.image['enemy1']
-        // this.sounds = this.game.sfacade.sounds['enemy1']
+        if(this.game.state instanceof FirstGameState){
+            // IF PHASE 1
+            this.sprites = this.game.facade.image['enemy1']
+            this.sounds = this.game.sfacade.sounds['enemy1']
+        }else if(this.game.state instanceof SecondGameState){
+            this.sprites = this.game.facade.image['enemy2']
+            this.sounds = this.game.sfacade.sounds['enemy2']
+        }else{
+            this.sprites = this.game.facade.image['enemy3']
+            this.sounds = this.game.sfacade.sounds['enemy3']
+        }
+
+
 
         // IF PHASE 2
-        // this.sprites = this.game.facade.image['enemy2']
-        // this.sounds = this.game.sfacade.sounds['enemy2']
+
 
         // IF PHASE 3
-        this.sprites = this.game.facade.image['enemy3']
-        this.sounds = this.game.sfacade.sounds['enemy3']
 
-        this.state = new EnemySummon(this)
+
+        this.state = new EnemyIdle(this)
         // this.state = new EnemyLaser(this)
         this.vx = 6
 
@@ -128,12 +136,6 @@ export class Enemy extends Entity{
             }
         }
 
-
-        
-
-
-
-
         this.#framesCounter += 1
 
         if(this.#framesCounter % this.#framesHold === 0){
@@ -144,8 +146,8 @@ export class Enemy extends Entity{
 
     }
 
-    takeDamage(hp, player = false){
-        if(cooldownValidation(this.#immune_counter,this.#immune_timer)){
+    takeDamage(hp, player = false, monkey = false){
+        if(cooldownValidation(this.#immune_counter,this.#immune_timer) || monkey){
             this.HP -= hp
             this.#immune_counter=0
             if(player){

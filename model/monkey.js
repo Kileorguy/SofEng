@@ -86,7 +86,7 @@ export class Monkey extends Entity{
         ){
             // console.log(this.#dmg_counter,this.#dmg_timer,cooldownValidation(this.#dmg_counter,this.#dmg_timer))
             if(cooldownValidation(this.#dmg_counter,this.#dmg_timer)){
-                this.enemy.takeDamage(4)
+                this.enemy.takeDamage(4, false,true)
 
                 this.playBite_Sound();
                 this.state = 'attack'

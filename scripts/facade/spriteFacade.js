@@ -2,6 +2,8 @@ export class SpriteFacade {
 
     image = {
         bg : null,
+        bg1 : null,
+        bg2 : null,
         player : {
             'attack' : {
                 'up' : [],
@@ -114,9 +116,19 @@ export class SpriteFacade {
 
     loadImages(){
         let image = new Image()
-        image.src = '/assets/backgrounds/Level_3.png'
+        image.src = '/assets/backgrounds/Level_1.png'
         console.log(image)
         this.image['bg'] = image
+        image = new Image()
+
+        image.src = '/assets/backgrounds/Level_2.png'
+        console.log(image)
+        this.image['bg1'] = image
+        image = new Image()
+
+        image.src = '/assets/backgrounds/Level_3.png'
+        console.log(image)
+        this.image['bg2'] = image
         const appendSpriteData = (entity,name,path) => {
             let image = new Image()
             image.src = path

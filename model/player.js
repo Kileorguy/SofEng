@@ -32,7 +32,7 @@ export class Player extends Entity{
     #atk_cooldown = 0.75
     #atk_counter = 0
 
-    #summon_cooldown = 5
+    #summon_cooldown = 0
     #summon_counter =0
 
     #immune_timer = 0.2
