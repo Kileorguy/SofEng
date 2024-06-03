@@ -334,7 +334,7 @@ export class SpriteFacade {
         }
 
         // Rangda3  LASER : laser
-        for (let i = 0; i <= 19; i++) {
+        for (let i = 0; i <= 28; i++) {
 
             path = '../../assets/rangdap3/laser/laser/sprite_' + i.toString().padStart(2,'0') +'.png'
             appendSpriteSubData('enemy3','laser','laser',path)
