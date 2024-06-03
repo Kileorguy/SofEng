@@ -128,6 +128,25 @@ export class Player extends Entity{
             console.error('No sound available.');
         }
     }
+
+    playSummon_Sound = () => 
+    {
+        let Sound;
+        Sound = this.sounds['summon']['sound'];
+
+        if (Sound.length > 0) 
+            {
+            
+            // FOR SINGLE SOUNDS
+            const audio = Sound[0];
+
+            audio.playbackRate = 1
+            audio.volume = 0.3;
+            audio.play();
+        } else {
+            console.error('No sound available.');
+        }
+    }
     
 
     keydownListener(event) {
@@ -202,6 +221,8 @@ export class Player extends Entity{
                 if(!this.dash && !this.block && this.#summon_counter >= this.#summon_cooldown){
                     this.#summon_counter=0
                     this.state.changeState(new PlayerSummon(this))
+
+                    this.playSummon_Sound()
                     this.#stateVal = 'spawn'
                 }
                 break

@@ -114,7 +114,7 @@ export class SpriteFacade {
 
     loadImages(){
         let image = new Image()
-        image.src = '/assets/backgrounds/test.jpg'
+        image.src = '/assets/backgrounds/Level_3.png'
         console.log(image)
         this.image['bg'] = image
         const appendSpriteData = (entity,name,path) => {

@@ -28,12 +28,51 @@ export class Monkey extends Entity{
         super(HP,x,y,width,height);
         this.game = Game.getInstance()
         this.sprites = this.game.facade.image['monkey']
+        this.sounds = this.game.sfacade.sounds['monkey']
         this.enemy = this.game.enemy
     }
 
     deathTimer(){
         if(this.HP <= 0) return true
         return this.#counter >= 60 * 8;
+    }
+
+    playExist_Sound = () => 
+    {
+        let Sound;
+        Sound = this.sounds['move']['sound'];
+
+        if (Sound.length > 0) 
+            {
+            
+            // FOR SINGLE SOUNDS
+            const audio = Sound[0];
+
+            audio.playbackRate = 2
+            audio.volume = 0.1;
+            audio.play();
+        } else {
+            console.error('No sound available.');
+        }
+    }
+
+    playBite_Sound = () => 
+    {
+        let Sound;
+        Sound = this.sounds['attack']['sound'];
+
+        if (Sound.length > 0) 
+            {
+            
+            // FOR SINGLE SOUNDS
+            const audio = Sound[0];
+
+            audio.playbackRate = 2
+            audio.volume = 0.3;
+            audio.play();
+        } else {
+            console.error('No sound available.');
+        }
     }
 
     move(){
@@ -48,6 +87,8 @@ export class Monkey extends Entity{
             // console.log(this.#dmg_counter,this.#dmg_timer,cooldownValidation(this.#dmg_counter,this.#dmg_timer))
             if(cooldownValidation(this.#dmg_counter,this.#dmg_timer)){
                 this.enemy.takeDamage(4)
+
+                this.playBite_Sound();
                 this.state = 'attack'
                 this.#dmg_counter=0
             }
@@ -77,6 +118,7 @@ export class Monkey extends Entity{
     drawSelf(ctx){
         
         if(this.state == 'move'){
+            this.playExist_Sound()
             if(this.#stateVal == 'right')
             {
                 this.#spriteLength = this.sprites['move']['right'].length

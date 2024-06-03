@@ -24,17 +24,15 @@ export class SoundFacade {
         },
         monkey : {
             'attack' : {
-                'left' : [],
-                'right' : [],
+                'sound' : [],
             },
             'move' : {
-                'left' : [],
-                'right' : [],
+                'sound' : [],
             }
         },
         enemy1 : {
             'attack' : {
-                'attack' : []
+                'sound' : []
             },
             'idle' : {
                 'idle' : []
@@ -43,34 +41,34 @@ export class SoundFacade {
         },
         enemy2 : {
             'attack' : {
-                'attack' : []
+                'sound' : []
             },
             'idle' : {
                 'idle' : []
             },
             'summon' : {
-                'summon' : []
+                'sound' : []
             }
 
         },
         enemy3 : {
             'attack' : {
-                'attack' : []
+                'sound' : []
             },
             'idle' : {
                 'idle' : []
             },
             'summon' : {
-                'summon' : []
+                'sound' : []
             },
             'laser' : {
-                'laser' : []
+                'sound' : []
             }
 
         },
         mage : {
             'attack' : {
-                'attack' : []
+                'sound' : []
             },
             'idle' : {
                 'idle' : []
@@ -121,6 +119,49 @@ export class SoundFacade {
             path = '../../assets/player/block/sound/Sound_ (' + i +').mp3'
             appendSoundSubData('player','block','sound',path)
         }
+
+        // Player SUMMON
+        for (let i = 1; i <= 1 ; i++) {
+            path = '../../assets/player/summon/sound/Sound_ (' + i +').mp3'
+            appendSoundSubData('player','summon','sound',path)
+        }
+
+        // Monkey Attack
+        for (let i = 1; i <= 1 ; i++) {
+            path = '../../assets/monkey/attack/sound/Sound_ (' + i +').mp3'
+            appendSoundSubData('monkey','attack','sound',path)
+        }
+
+        // Monkey Move
+        for (let i = 1; i <= 1 ; i++) {
+            path = '../../assets/monkey/move/sound/Sound_ (' + i +').mp3'
+            appendSoundSubData('monkey','move','sound',path)
+        }
+
+        // Rangdap1 Attack
+        for (let i = 1; i <= 1 ; i++) {
+            path = '../../assets/rangdap1/attack/sound/Sound_ (' + i +').mp3'
+            appendSoundSubData('enemy1','attack','sound',path)
+        }
+
+        // Rangdap2 Attack
+        for (let i = 1; i <= 1 ; i++) {
+            path = '../../assets/rangdap2/attack/sound/Sound_ (' + i +').mp3'
+            appendSoundSubData('enemy2','attack','sound',path)
+        }
+
+        // Rangdap2 Attack
+        for (let i = 1; i <= 1 ; i++) {
+            path = '../../assets/rangdap3/attack/sound/Sound_ (' + i +').mp3'
+            appendSoundSubData('enemy3','attack','sound',path)
+        }
+
+        // Rangdap2 Attack
+        for (let i = 1; i <= 1 ; i++) {
+            path = '../../assets/leyak/attack/sound/Sound_ (' + i +').mp3'
+            appendSoundSubData('mage','attack','sound',path)
+        }
+
 
     }
 
