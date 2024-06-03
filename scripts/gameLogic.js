@@ -4,6 +4,7 @@ import {FactorySingleton} from "./singleton/allFactorySingleton.js";
 import {Laser} from "../model/laser.js";
 import {FirstGameState} from "./state/gameState/firstGameState.js";
 import {SpriteFacade} from "./facade/spriteFacade.js";
+import {SoundFacade} from "./facade/soundFacade.js";
 import {ThirdGameState} from "./state/gameState/thirdGameState.js";
 
 
@@ -18,6 +19,7 @@ export class Game {
     static level = 1
     ctx
     facade = new SpriteFacade()
+    sfacade = new SoundFacade()
 
 
 
