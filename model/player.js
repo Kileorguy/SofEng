@@ -7,6 +7,7 @@ import {PlayerDash} from "../scripts/state/playerState/playerDash.js";
 import {PlayerSummon} from "../scripts/state/playerState/playerSummon.js";
 import {PlayerBlock} from "../scripts/state/playerState/playerBlock.js";
 import {cooldownValidation} from "../helper/frameRateHelper.js";
+import { SoundFacade } from "../scripts/facade/soundFacade.js";
 
 export class Player extends Entity{
     movementSpeed = 8
@@ -31,7 +32,7 @@ export class Player extends Entity{
     #atk_cooldown = 0.75
     #atk_counter = 0
 
-    #summon_cooldown = 5
+    #summon_cooldown = 0
     #summon_counter =0
 
     #immune_timer = 0.2
@@ -62,11 +63,91 @@ export class Player extends Entity{
         this.summon = false
         this.game = Game.getInstance()
         this.sprites = this.game.facade.image['player']
+        this.sounds = this.game.sfacade.sounds['player']
         this.keydownListener = this.keydownListener.bind(this);
         this.keyupListener = this.keyupListener.bind(this);
         document.addEventListener('keydown', this.keydownListener);
         document.addEventListener('keyup', this.keyupListener);
     }
+
+    playDash_Sound = () => 
+    {
+        let Sound;
+        Sound = this.sounds['dash']['sound'];
+
+        if (Sound.length > 0) 
+            {
+            
+            // FOR SINGLE SOUNDS
+            const audio = Sound[0];
+
+            audio.playbackRate = 2
+            audio.volume = 0.3;
+            audio.play();
+        } else {
+            console.error('No sound available.');
+        }
+    }
+
+    playAttack_Sound = () => 
+    {
+        let Sound;
+        Sound = this.sounds['attack']['sound'];
+
+        if (Sound.length > 0) 
+            {
+            
+            // FOR RANDOMIZER
+            const randomIndex = Math.floor(Math.random() * Sound.length);
+            console.log(randomIndex);
+            const audio = Sound[randomIndex];
+
+            audio.playbackRate = 2
+            audio.volume = 0.2;
+            audio.play();
+        } else {
+            console.error('No sound available.');
+        }
+    }
+
+    playShield_Sound = () => 
+    {
+        let Sound;
+        Sound = this.sounds['block']['sound'];
+
+        if (Sound.length > 0) 
+            {
+            
+            // FOR SINGLE SOUNDS
+            const audio = Sound[0];
+
+            audio.playbackRate = 10
+            audio.volume = 0.3;
+            audio.play();
+        } else {
+            console.error('No sound available.');
+        }
+    }
+
+    playSummon_Sound = () => 
+    {
+        let Sound;
+        Sound = this.sounds['summon']['sound'];
+
+        if (Sound.length > 0) 
+            {
+            
+            // FOR SINGLE SOUNDS
+            const audio = Sound[0];
+
+            audio.playbackRate = 1
+            audio.volume = 0.3;
+            audio.play();
+        } else {
+            console.error('No sound available.');
+        }
+    }
+    
 
     keydownListener(event) {
         let atk = this.attacking
@@ -119,6 +200,7 @@ export class Player extends Entity{
                     this.state.changeState(new PlayerAttack(this))
                     this.#atk_counter = 0
                     
+                    this.playAttack_Sound()
                     this.#stateVal = 'attack'
                 }
                 break
@@ -129,6 +211,7 @@ export class Player extends Entity{
                     this.state.changeState(new PlayerDash(this))
                     this.#dash_counter = 0
                     
+                    this.playDash_Sound()
                     this.#stateVal = 'dash'
                 }
 
@@ -138,6 +221,8 @@ export class Player extends Entity{
                 if(!this.dash && !this.block && this.#summon_counter >= this.#summon_cooldown){
                     this.#summon_counter=0
                     this.state.changeState(new PlayerSummon(this))
+
+                    this.playSummon_Sound()
                     this.#stateVal = 'spawn'
                 }
                 break
@@ -148,6 +233,7 @@ export class Player extends Entity{
                     this.state.changeState(new PlayerBlock(this))
                     this.#block_counter = 0
                     
+                    this.playShield_Sound()
                     this.#stateVal = 'block'
                     // console.log("block")
                 }
@@ -275,6 +361,7 @@ export class Player extends Entity{
             }
         }else if(this.state instanceof PlayerDash){
             this.#stateVal = 'dash'
+            console.log(this.sounds['dash']['sound']);
             if(this.facing ==='a'){
                 this.#spriteLength = this.sprites['dash']['left'].length
                 this.spriteFrame %= this.sprites['dash']['left'].length

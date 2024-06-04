@@ -9,6 +9,7 @@ export class Mage extends Entity {
         super(HP,x,y,width,height);
         this.game = Game.getInstance()
         this.sprites = this.game.facade.image['mage']
+        this.sounds = this.game.sfacade.sounds['mage']
         this.state = new MageAttack(this)
         this.state.startState()
     }
@@ -19,6 +20,27 @@ export class Mage extends Entity {
     spriteFrame = 0
     #framesCounter = 0
     #framesHold = 8
+
+    
+    playAttack_Sound = () => 
+    {
+        let Sound;
+        Sound = this.sounds['attack']['sound'];
+
+        if (Sound.length > 0) 
+            {
+            
+            // FOR SINGLE SOUNDS
+            const audio = Sound[0];
+
+            audio.playbackRate = 2
+            audio.volume = 0.1;
+            audio.play();
+        } else {
+            console.error('No sound available.');
+        }
+    }
+
 
     move(){
         this.#immune_counter+=1
@@ -31,6 +53,7 @@ export class Mage extends Entity {
             this.spriteFrame %= this.sprites['idle']['idle'].length
             ctx.drawImage(this.sprites['idle']['idle'][this.spriteFrame],this.x,this.y,this.width,this.height)
         }else if(this.state instanceof MageAttack){
+            this.playAttack_Sound()
             this.#spriteLength = this.sprites['attack']['attack'].length
             this.spriteFrame %= this.sprites['attack']['attack'].length
             ctx.drawImage(this.sprites['attack']['attack'][this.spriteFrame],this.x,this.y,this.width,this.height)

@@ -2,6 +2,7 @@ import {Game} from "../../scripts/gameLogic.js";
 import {FactorySingleton} from "../../scripts/singleton/allFactorySingleton.js";
 import {Laser} from "../../model/laser.js";
 import {SpriteFacade} from "../../scripts/facade/spriteFacade.js";
+import {SoundFacade} from "../../scripts/facade/soundFacade.js";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");

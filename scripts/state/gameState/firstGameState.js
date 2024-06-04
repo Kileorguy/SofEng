@@ -2,9 +2,13 @@ import {State} from "../state.js";
 import {Game} from "../../gameLogic.js";
 import {SecondGameState} from "./secondGameState.js";
 import {FactorySingleton} from "../../singleton/allFactorySingleton.js";
+import {cooldownValidation} from "../../../helper/frameRateHelper.js";
 
 
 export class FirstGameState extends State{
+
+    #counter = 0
+    #transition_cooldown = 2
 
     /**
      *
@@ -63,9 +67,29 @@ export class FirstGameState extends State{
         this.game.enemy = f.enemyFact.createEntity(Game.canvasWidth/5, Game.canvasHeight/2)
         console.log('done create enemy')
         this.game.enemy.state.startState()
+
+        let game = this.game
+        this.moveLogic(game)
+        game.player.drawSelf(game.ctx)
+        // this.moveLogic(game)
+
+        // if(game.enemy)game.enemy.state.updateState()
+        // if(game.laser) game.laser.drawSelf(game.ctx,game.player)
     }
 
     updateState(){
+        if(!cooldownValidation(this.#counter,this.#transition_cooldown)){
+            this.#counter++
+            // this.moveLogic(this.game)
+            // console.log(this.#counter)
+            this.game.player.drawSelf(this.game.ctx)
+            if(this.game.enemy)this.game.enemy.drawSelf(this.game.ctx)
+
+
+            return
+        }
+
+
         let game = this.game
         this.moveLogic(game)
         if(game.enemy)game.enemy.state.updateState()
