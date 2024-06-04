@@ -8,6 +8,7 @@ import {LoseState} from "./state/gameState/loseState.js";
 import {SoundFacade} from "./facade/soundFacade.js";
 import {ThirdGameState} from "./state/gameState/thirdGameState.js";
 import {SecondGameState} from "./state/gameState/secondGameState.js";
+import {WinState} from "./state/gameState/winState.js";
 
 
 // script isi logic game (start game, dst)
@@ -148,6 +149,9 @@ export class Game {
         }
         this.animation = requestAnimationFrame(this.render.bind(this))
         if(this.enemy.HP <=0){
+            if (this.state instanceof WinState){
+                return;
+            }
                 this.state.changeState()
         }
         if (this.player.HP <= 0){
