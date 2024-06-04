@@ -10,7 +10,6 @@ export class WinState extends State{
         this.form = document.getElementById("gameForm");
         this.container = document.getElementById("outerResult");
         this.canvas = document.getElementById("canvas");
-
         this.statusText = document.getElementById("resultStatus");
     }
 

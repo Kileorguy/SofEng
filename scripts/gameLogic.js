@@ -4,7 +4,7 @@ import {FactorySingleton} from "./singleton/allFactorySingleton.js";
 import {Laser} from "../model/laser.js";
 import {FirstGameState} from "./state/gameState/firstGameState.js";
 import {SpriteFacade} from "./facade/spriteFacade.js";
-import {ThirdGameState} from "./state/gameState/thirdGameState.js";
+import {LoseState} from "./state/gameState/loseState.js";
 
 
 // script isi logic game (start game, dst)
@@ -136,10 +136,13 @@ export class Game {
         }
         this.animation = requestAnimationFrame(this.render.bind(this))
         if(this.enemy.HP <=0){
-                // cancelAnimationFrame(this.animation)
-                // clearCanvas(this.ctx)
                 this.state.changeState()
         }
+        if (this.player.HP <= 0){
+            this.state = new LoseState(this);
+            this.state.startState();
+        }
+
 
     }
 
