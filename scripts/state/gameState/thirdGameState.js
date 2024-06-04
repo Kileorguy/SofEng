@@ -2,6 +2,7 @@ import {State} from "../state.js";
 import {Game} from "../../gameLogic.js";
 import {FactorySingleton} from "../../singleton/allFactorySingleton.js";
 import {WinState} from "./winState.js";
+import {cooldownValidation} from "../../../helper/frameRateHelper.js";
 export class ThirdGameState extends State{
 
     #counter = 0
