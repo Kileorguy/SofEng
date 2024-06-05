@@ -26,18 +26,18 @@ export class WinState extends State{
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         let col = collection(db, 'scoreboard')
-        await addDoc(col, {username: name, time : new Date()})
-
+        await addDoc(col, {username: name, time : new Date(this.game.endTime - this.game.startTime)})
     }
 
     startState(){
+        this.game.endTime = Date.now()
         this.container.style.display = 'flex';
         this.canvas.style.display = 'none';
         this.statusText.innerHTML ="CONGRATULATIONS, YOU HAVE DEFEATED THE BOSS"
         this.form.addEventListener('submit',(ev) => {
             ev.preventDefault();
             this.inputPlayer().then(r =>{
-                window.location.href = './play.html';
+                // window.location.href = './play.html';
             } );
 
         })

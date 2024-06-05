@@ -44,6 +44,7 @@ export class Game {
     fpsInterval
     then
     startTime
+    endTime
     elapsed
 
     magics = []
