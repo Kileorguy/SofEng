@@ -37,7 +37,7 @@ export class WinState extends State{
         this.form.addEventListener('submit',(ev) => {
             ev.preventDefault();
             this.inputPlayer().then(r =>{
-                // window.location.href = './play.html';
+                window.location.href = './play.html';
             } );
 
         })
