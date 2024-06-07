@@ -62,6 +62,7 @@ export class SecondGameState extends State{
     }
 
     startState(){
+        this.game.mageCounter = 0
         this.game.magics = []
         this.game.monkeys = []
         this.game.mages = []
@@ -71,6 +72,9 @@ export class SecondGameState extends State{
 
         this.game.enemy = f.enemyFact.createEntity(Game.canvasWidth/5, Game.canvasHeight/2)
         this.game.enemy.state.startState()
+
+        this.game.player = f.playerFact.createEntity(Game.canvasWidth/2, Game.canvasHeight/4)
+        this.game.player.state.startState()
 
         let game = this.game
         this.moveLogic(game)
