@@ -59,6 +59,12 @@ export class FirstGameState extends State{
     }
 
     startState(){
+
+        const backgroundMusic = new Audio('../../assets/BGM/BGM.mp3');
+        backgroundMusic.loop = true;
+        backgroundMusic.volume = 0.05
+        backgroundMusic.play();
+
         this.game.mageCounter = 0
         this.game.magics = []
         this.game.monkeys = []

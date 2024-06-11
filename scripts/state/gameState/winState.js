@@ -33,6 +33,25 @@ export class WinState extends State{
         this.game.endTime = Date.now()
         this.container.style.display = 'flex';
         this.canvas.style.display = 'none';
+
+        const video = document.createElement('video');
+        video.src = '../../assets/transitions/win/win_n2.mp4';
+        video.controls = false;
+        video.autoplay = true;
+        video.style.position = 'fixed';
+        video.style.top = '0';
+        video.style.left = '0';
+        video.style.width = '100%';
+        video.style.height = '100%';
+        video.style.zIndex = '1000';
+        video.style.objectFit = 'cover';
+
+        video.addEventListener('ended', () => {
+            video.style.display = 'none';
+        });
+
+        document.body.appendChild(video);
+
         this.statusText.innerHTML ="CONGRATULATIONS, YOU HAVE DEFEATED THE BOSS"
         this.form.addEventListener('submit',(ev) => {
             ev.preventDefault();

@@ -62,6 +62,30 @@ export class SecondGameState extends State{
     }
 
     startState(){
+
+        const backgroundMusic = new Audio('../../assets/BGM/BGM.mp3');
+        backgroundMusic.loop = true;
+        backgroundMusic.volume = 0.05
+        backgroundMusic.play();
+
+        const video = document.createElement('video');
+        video.src = '../../assets/transitions/levels/onetwo/transition_L1L2.mp4';
+        video.controls = false;
+        video.autoplay = true;
+        video.style.position = 'fixed';
+        video.style.top = '0';
+        video.style.left = '0';
+        video.style.width = '100%';
+        video.style.height = '100%';
+        video.style.zIndex = '1000';
+        video.style.objectFit = 'cover';
+
+        video.addEventListener('ended', () => {
+            video.style.display = 'none';
+        });
+
+        document.body.appendChild(video);
+
         this.game.mageCounter = 0
         this.game.magics = []
         this.game.monkeys = []
