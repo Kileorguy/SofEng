@@ -24,23 +24,17 @@ getDatas().then((data) => {
         let name = e.data().username
         let second = e.data().time.seconds
         let minute = Math.floor(e.data().time.seconds/60)
-
         let tr1 = document.createElement('tr')
         let td1 = document.createElement('td')
         td1.innerHTML = `RANK ${i}`
         tr1.appendChild(td1)
-        let tr2 = document.createElement('tr')
         let td2 = document.createElement('td')
         td2.innerHTML = name
-        tr2.appendChild(td2)
-        let tr3 = document.createElement('tr')
+        tr1.appendChild(td2)
         let td3 = document.createElement('td')
         td3.innerHTML = `${minute}:${second}`
-        tr3.appendChild(td3)
-        i++
+        tr1.appendChild(td3)
         table.appendChild(tr1)
-        table.appendChild(tr2)
-        table.appendChild(tr3)
     })
 })
 
