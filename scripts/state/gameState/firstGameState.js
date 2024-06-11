@@ -59,6 +59,7 @@ export class FirstGameState extends State{
     }
 
     startState(){
+        this.game.mageCounter = 0
         this.game.magics = []
         this.game.monkeys = []
         this.game.mages = []

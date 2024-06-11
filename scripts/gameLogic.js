@@ -36,8 +36,8 @@ export class Game {
     constructor() {
         this.fact = FactorySingleton.getInstance()
 
-        // this.state = new FirstGameState(this)
-        this.state = new ThirdGameState(this)
+        this.state = new FirstGameState(this)
+        // this.state = new ThirdGameState(this)
 
     }
     fps
