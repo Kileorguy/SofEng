@@ -18,7 +18,7 @@ async function getDatas(){
 }
 
 getDatas().then((data) => {
-    let i = 1
+    let i = 0
     let table = document.getElementById('global-rank-table')
     data.forEach((e) => {
         let name = e.data().username
@@ -26,7 +26,8 @@ getDatas().then((data) => {
         let minute = Math.floor(e.data().time.seconds/60)
         let tr1 = document.createElement('tr')
         let td1 = document.createElement('td')
-        td1.innerHTML = `RANK ${i}`
+        i+=1
+        td1.innerHTML = `${i}`
         tr1.appendChild(td1)
         let td2 = document.createElement('td')
         td2.innerHTML = name
