@@ -35,11 +35,13 @@ export class LoseState extends State{
         this.container.style.display = 'flex';
         this.canvas.style.display = 'none';
         this.form.style.display = 'none';
-        
-        this.statusText.innerHTML ="YOU LOSE"
-        setTimeout(() => {
+
+        video.addEventListener('ended', () => {
+            video.style.display = 'none';
             window.location.href = './play.html'
-        }, 3000)
+
+        });
+        this.statusText.innerHTML ="YOU LOSE"
     }
 
 

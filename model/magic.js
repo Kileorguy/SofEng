@@ -30,6 +30,8 @@ export class Magic {
         this.py = this.player.y + this.player.height/2
         this.#previousTime = performance.now()
         this.#currentTime = performance.now()
+        this.#radian = Math.atan2(this.py - this.y, this.px - this.x);
+
     }
 
     move(){
@@ -39,11 +41,11 @@ export class Magic {
 
         this.px = this.player.x + this.player.width/2
         this.py = this.player.y + this.player.height/2
-
-        if(this.#deltaTime>=this.#timer+0.5) {
+        console.log(getEuclidean(this.x,this.y,this.px,this.py))
+        if(this.#deltaTime>=this.#timer+0.5 || getEuclidean(this.x,this.y,this.px,this.py) <= 300 ) {
             this.follow = false
         }
-        if(getEuclidean(this.x,this.y,this.px,this.py) > 150 &&  this.follow){
+        if(this.follow){
 
             this.#radian = Math.atan2(this.py - this.y, this.px - this.x);
         }else{

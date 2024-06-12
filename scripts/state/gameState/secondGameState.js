@@ -7,8 +7,7 @@ import {cooldownValidation} from "../../../helper/frameRateHelper.js";
 
 export class SecondGameState extends State{
 
-    #counter = 0
-    #transition_cooldown = 2
+    done = false
 
     /**
      *
@@ -62,6 +61,10 @@ export class SecondGameState extends State{
     }
 
     startState(){
+        let f = FactorySingleton.getInstance()
+
+        this.game.enemy = f.enemyFact.createEntity(Game.canvasWidth/5, Game.canvasHeight/2)
+        this.game.enemy.state.startState()
 
         const backgroundMusic = new Audio('../../assets/BGM/BGM.mp3');
         backgroundMusic.loop = true;
@@ -81,41 +84,34 @@ export class SecondGameState extends State{
         video.style.objectFit = 'cover';
 
         video.addEventListener('ended', () => {
+            this.game.mageCounter = 0
+            this.game.magics = []
+            this.game.monkeys = []
+            this.game.mages = []
+            this.game.circleLights = []
+
+
+
+
+            let game = this.game
+            this.moveLogic(game)
+            game.player.drawSelf(game.ctx)
+
             video.style.display = 'none';
+            this.done = true
+            this.game.player = f.playerFact.createEntity(Game.canvasWidth/2, Game.canvasHeight/4)
+            this.game.player.state.startState()
         });
 
         document.body.appendChild(video);
 
-        this.game.mageCounter = 0
-        this.game.magics = []
-        this.game.monkeys = []
-        this.game.mages = []
-        this.game.circleLights = []
 
-        let f = FactorySingleton.getInstance()
-
-        this.game.enemy = f.enemyFact.createEntity(Game.canvasWidth/5, Game.canvasHeight/2)
-        this.game.enemy.state.startState()
-
-        this.game.player = f.playerFact.createEntity(Game.canvasWidth/2, Game.canvasHeight/4)
-        this.game.player.state.startState()
-
-        let game = this.game
-        this.moveLogic(game)
-        game.player.drawSelf(game.ctx)
         // this.moveLogic(game)
     }
 
     updateState(){
 
-        if(!cooldownValidation(this.#counter,this.#transition_cooldown)){
-            this.#counter++
-            // this.moveLogic(this.game)
-            // console.log(this.#counter)
-            this.game.player.drawSelf(this.game.ctx)
-            if(this.game.enemy)this.game.enemy.drawSelf(this.game.ctx)
-
-
+        if(!this.done){
             return
         }
 
