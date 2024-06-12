@@ -158,6 +158,7 @@ export class Player extends Entity{
         let key = event.key;
         key = key.toLowerCase()
         // console.log(key)
+        if(this.game.state.done && !this.game.state.done) return
         switch (key) {
             case 'arrowleft':{
                 // setPlayer

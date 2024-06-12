@@ -37,7 +37,7 @@ export class Game {
         this.fact = FactorySingleton.getInstance()
 
         this.state = new FirstGameState(this)
-        // this.state = new ThirdGameState(this)
+        // this.state = new LoseState(this)
 
     }
     fps
@@ -156,6 +156,9 @@ export class Game {
                 this.state.changeState()
         }
         if (this.player.HP <= 0){
+            if(this.state instanceof LoseState){
+               return
+            }
             this.state = new LoseState(this);
             this.state.startState();
         }
