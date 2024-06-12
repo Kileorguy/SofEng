@@ -95,6 +95,8 @@ export class ThirdGameState extends State{
             this.moveLogic(game)
             game.player.drawSelf(game.ctx)
             this.done = true
+            this.game.player.removeEventListener()
+            this.game.player = null
             this.game.player = f.playerFact.createEntity(Game.canvasWidth/2, Game.canvasHeight/4)
             this.game.player.state.startState()
         });
