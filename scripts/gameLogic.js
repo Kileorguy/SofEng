@@ -3,6 +3,8 @@ import {Magic} from "../model/magic.js";
 import {FactorySingleton} from "./singleton/allFactorySingleton.js";
 import {Laser} from "../model/laser.js";
 import {FirstGameState} from "./state/gameState/firstGameState.js";
+import {SpriteFacade} from "./facade/spriteFacade.js";
+import {ThirdGameState} from "./state/gameState/thirdGameState.js";
 
 
 // script isi logic game (start game, dst)
@@ -15,6 +17,8 @@ export class Game {
     static mageCounter = 0
     static level = 1
     ctx
+    facade = new SpriteFacade()
+
 
 
     static getInstance = () =>{
@@ -27,7 +31,7 @@ export class Game {
     constructor() {
         this.fact = FactorySingleton.getInstance()
         this.state = new FirstGameState(this)
-        this.state.startState()
+
     }
     fps
     fpsInterval
@@ -53,7 +57,7 @@ export class Game {
     drawHealth(ctx){
         if(this.player){
             ctx.font = '30px Arial'
-            ctx.fillStyle = 'green'
+            ctx.fillStyle = 'white'
             ctx.fillText(this.player.HP,10,50,100,100)
             ctx.fillStyle = 'red'
             ctx.fillText(this.enemy.HP,10,100,100,100)
@@ -75,7 +79,6 @@ export class Game {
     }
 
     moveLogic(){
-        // console.log(Game.mageCounter)
         if(this.enemy)this.enemy.drawSelf(this.ctx)
 
         this.player.move()
@@ -101,7 +104,10 @@ export class Game {
         this.mages.forEach((m,index)=>{
             m.move()
             m.drawSelf(this.ctx)
-            if(m.HP<=0) this.mages.splice(index,1)
+            if(m.HP<=0) {
+                this.mages.splice(index,1)
+                Game.mageCounter-=1
+            }
         })
 
         this.circleLights.forEach((c,idx)=>{
@@ -129,10 +135,16 @@ export class Game {
 
         }
         this.animation = requestAnimationFrame(this.render.bind(this))
-        // if(this.player.HP <= 0 || this.enemy.HP <=0){
-        //     cancelAnimationFrame(this.animation)
-        //     clearCanvas(this.ctx)
-        // }
+        if(this.enemy.HP <=0){
+            if (this.state instanceof ThirdGameState){
+                cancelAnimationFrame(this.animation)
+                clearCanvas(this.ctx)
+            }else{
+                this.state.changeState()
+                this.state.startState()
+            }
+        }
+
     }
 
 

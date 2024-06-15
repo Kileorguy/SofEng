@@ -6,7 +6,7 @@ import {CircleLight} from "../../../model/circleLight.js";
 
 export class EnemySummon extends State{
     #counter=0
-    #freeze = 0.8
+    #freeze = 1
     constructor(enemy) {
         super();
         this.enemy = enemy

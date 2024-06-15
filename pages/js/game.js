@@ -1,15 +1,22 @@
 import {Game} from "../../scripts/gameLogic.js";
 import {FactorySingleton} from "../../scripts/singleton/allFactorySingleton.js";
 import {Laser} from "../../model/laser.js";
+import {SpriteFacade} from "../../scripts/facade/spriteFacade.js";
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
 const cvsWidth = canvas.offsetWidth
 const cvsHeight = canvas.offsetHeight
 
+
 window.onload = () =>{
+
     startGame()
+    // console.log('test')
 }
 
 // function initEntities(){
@@ -18,6 +25,8 @@ window.onload = () =>{
 // }
 
 function startGame(){
+
+
     // kurang lebih ini buat init init variable gamenya
     let f = FactorySingleton.getInstance()
     const game = Game.getInstance()
@@ -32,11 +41,16 @@ function startGame(){
     game.player.state.startState()
 
     game.setFPS()
-    game.enemy = f.enemyFact.createEntity(cvsWidth/5, cvsHeight/2)
-    game.enemy.state.startState()
+
+    game.state.startState()
+
+    // let f = FactorySingleton.getInstance()
+    // this.game.enemy = f.enemyFact.createEntity(Game.canvasWidth/5, Game.canvasHeight/2)
+    // this.game.enemy.state.startState()
 
     // game.laser = new Laser(100,100)
     game.render()
+
 
     // game.mages.push(f.mageFact.createEntity(1001,100))
     // game.magics.push(new Magic(150,200))

@@ -3,6 +3,10 @@ import {EnemyWalk} from "./enemyWalk.js";
 import {EnemyMagic} from "./enemyMagic.js";
 import {EnemySummon} from "./enemySummon.js";
 import {EnemyLaser} from "./enemyLaser.js";
+import {Game} from "../../gameLogic.js";
+import {SecondGameState} from "../gameState/secondGameState.js";
+import {ThirdGameState} from "../gameState/thirdGameState.js";
+import {FirstGameState} from "../gameState/firstGameState.js";
 
 export class EnemyIdle extends State{
     #_timer
@@ -35,7 +39,20 @@ export class EnemyIdle extends State{
 
     }
     changeState(){
-        let rand = Math.round(Math.random()*3)+1
+        let game = Game.getInstance()
+
+        //buat batasin move bossnya per level
+        let level = 0
+        if (game.state instanceof FirstGameState){
+            level =1
+        }else if (game.state instanceof  SecondGameState){
+            level= 2
+        }else if (game.state instanceof ThirdGameState){
+            level = 3
+        }
+
+        let rand = Math.round(Math.random()*level)+1
+
         // console.log(rand)
 
         if(rand===1){

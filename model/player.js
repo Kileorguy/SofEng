@@ -11,12 +11,19 @@ import {cooldownValidation} from "../helper/frameRateHelper.js";
 export class Player extends Entity{
     movementSpeed = 8
     #framesElapsed = 0
-    #framesHold = 6
+    #framesHold = 8
     #framesCurr = 0
     #framesMax = 3
+    #framesCounter = 0
+
+    #stateVal = 'idle'
+    spriteFrame = 0
+    #spriteLength = 1
 
     #dash_cooldown = 0.5
     #dash_counter = 0
+
+    #attack_timer = 0
 
     #block_cooldown = 5
     #block_counter = this.#block_cooldown * 60
@@ -51,6 +58,7 @@ export class Player extends Entity{
         this.block = false
         this.summon = false
         this.game = Game.getInstance()
+        this.sprites = this.game.facade.image['player']
         this.keydownListener = this.keydownListener.bind(this);
         this.keyupListener = this.keyupListener.bind(this);
         document.addEventListener('keydown', this.keydownListener);
@@ -72,18 +80,24 @@ export class Player extends Entity{
                 if(!atk && !dash && !summon) this.facing = 'a'
                 this.vx = -this.movementSpeed
                 this.keydown = true
+                
+                this.#stateVal = 'move'
                 break
             }
             case 'arrowright':{
                 if(!atk && !dash && !summon) this.facing = 'd'
                 this.vx = this.movementSpeed
                 this.keydown = true
+                
+                this.#stateVal = 'move'
                 break
             }
             case 'arrowup':{
                 if(!atk && !dash && !summon) this.facing = 'w'
                 this.vy = -this.movementSpeed
                 this.keydown = true
+                
+                this.#stateVal = 'move'
                 break
             }
             case 'arrowdown':{
@@ -91,6 +105,8 @@ export class Player extends Entity{
                 this.vy = this.movementSpeed
 
                 this.keydown = true
+                
+                this.#stateVal = 'move'
                 break
             }
             case 'q':{
@@ -99,6 +115,8 @@ export class Player extends Entity{
                 if(cooldownValidation(this.#atk_counter, this.#atk_cooldown)){
                     this.state.changeState(new PlayerAttack(this))
                     this.#atk_counter = 0
+                    
+                    this.#stateVal = 'attack'
                 }
                 break
             }
@@ -107,6 +125,8 @@ export class Player extends Entity{
                     && !this.block ){
                     this.state.changeState(new PlayerDash(this))
                     this.#dash_counter = 0
+                    
+                    this.#stateVal = 'dash'
                 }
 
                 break
@@ -114,6 +134,8 @@ export class Player extends Entity{
             case 'e':{
                 if(!this.dash && !this.block)
                 this.state.changeState(new PlayerSummon(this))
+                
+                this.#stateVal = 'spawn'
                 break
             }
             case 'd':{
@@ -121,6 +143,8 @@ export class Player extends Entity{
                     && !this.block){
                     this.state.changeState(new PlayerBlock(this))
                     this.#block_counter = 0
+                    
+                    this.#stateVal = 'block'
                     // console.log("block")
                 }
                 break
@@ -141,18 +165,21 @@ export class Player extends Entity{
 
                 if(this.vx === this.movementSpeed){
                     this.vx = 0
+
                 }
                 break
             }
             case 'arrowup':{
                 if(this.vy === -this.movementSpeed){
                     this.vy = 0
+
                 }
                 break
             }
             case 'arrowdown':{
                 if(this.vy === this.movementSpeed){
                     this.vy = 0
+
                 }
                 break
             }
@@ -175,88 +202,193 @@ export class Player extends Entity{
         }
     }
 
+    checkCollision = (x,y,width,height) =>{
+        let game = Game.getInstance()
+        let enemy = game.enemy
+        let mages = game.mages
+        if (x < enemy.x + enemy.width &&
+            x + width > enemy.x &&
+            y < enemy.y + enemy.height &&
+            y + height > enemy.y) {
+            enemy.takeDamage(10,true)
+        }
 
+        for (let mage of mages) {
+            if (
+                x < mage.x + mage.width &&
+                x + width > mage.x &&
+                y < mage.y + mage.height &&
+                y + height > mage.y
+            ) {
+                mage.takeDamage(10,true)
+            }
+        }
+
+
+    }
     interval
     drawSelf(ctx){
-        const checkCollision = (x,y,width,height) =>{
-            let game = Game.getInstance()
-            let enemy = game.enemy
-            let mages = game.mages
-            // console.log(x,enemy.x)
-            // console.log(x+width, enemy.x+width)
-            // 324.5    289.8
-            // 404.5    369.8
-            if (x < enemy.x + enemy.width &&
-                x + width > enemy.x &&
-                y < enemy.y + enemy.height &&
-                y + height > enemy.y) {
-                enemy.takeDamage(10,true)
-            }
 
-            for (let mage of mages) {
-                if (
-                    x < mage.x + mage.width &&
-                    x + width > mage.x &&
-                    y < mage.y + mage.height &&
-                    y + height > mage.y
-                ) {
-                    // console.log('test')
-                    mage.takeDamage(10,true)
-                }
-            }
-
-
-        }
         // console.log(this.HP)
-        if(this.attacking && this.#framesCurr === 2){
+        if(this.attacking && this.#attack_timer>=20){
+            this.#attack_timer=0
             this.attacking = false
             this.#framesCurr=0
             this.#framesElapsed=0
+            this.#framesCounter = 0
+            this.spriteFrame=0
+            this.#stateVal = 'idle'
         }
-
-        // console.log(this.attacking)
-
+        // console.log(this.spriteFrame)
         if(!this.block) ctx.fillStyle = 'blue'
         else ctx.fillStyle = 'cyan'
-        ctx.fillRect(this.x,this.y,this.width,this.height)
+        // ctx.fillRect(this.x,this.y,this.width,this.height)
 
-        if(this.attacking === false) return
 
-        this.#framesElapsed ++;
-
-        if(this.#framesElapsed % this.#framesHold === 0){
-
-            // console.log(this.#framesElapsed,this.#framesCurr,this.#framesMax-1,this.#framesHold)
-            if(this.#framesCurr < this.#framesMax - 1){
-                this.#framesCurr+=1
-            }else{
-                // this.#framesCurr=0
+        if(this.state instanceof PlayerAttack){
+            this.#stateVal = 'attack'
+            if(this.facing ==='a'){
+                this.#spriteLength = this.sprites['attack']['left'].length
+                this.spriteFrame %= this.sprites['attack']['left'].length
+                ctx.drawImage(this.sprites['attack']['left'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='d'){
+                this.#spriteLength = this.sprites['attack']['right'].length
+                this.spriteFrame %= this.sprites['attack']['right'].length
+                ctx.drawImage(this.sprites['attack']['right'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='w'){
+                this.#spriteLength = this.sprites['attack']['up'].length
+                this.spriteFrame %= this.sprites['attack']['up'].length
+                ctx.drawImage(this.sprites['attack']['up'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='s'){
+                this.#spriteLength = this.sprites['attack']['down'].length
+                this.spriteFrame %= this.sprites['attack']['down'].length
+                ctx.drawImage(this.sprites['attack']['down'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }
+        }else if(this.state instanceof PlayerDash){
+            this.#stateVal = 'dash'
+            if(this.facing ==='a'){
+                this.#spriteLength = this.sprites['dash']['left'].length
+                this.spriteFrame %= this.sprites['dash']['left'].length
+                ctx.drawImage(this.sprites['dash']['left'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='d'){
+                this.#spriteLength = this.sprites['dash']['right'].length
+                this.spriteFrame %= this.sprites['dash']['right'].length
+                ctx.drawImage(this.sprites['dash']['right'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='w'){
+                this.#spriteLength = this.sprites['dash']['up'].length
+                this.spriteFrame %= this.sprites['dash']['up'].length
+                ctx.drawImage(this.sprites['dash']['up'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='s'){
+                this.#spriteLength = this.sprites['dash']['down'].length
+                this.spriteFrame %= this.sprites['dash']['down'].length
+                ctx.drawImage(this.sprites['dash']['down'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }
+        }else if(this.state instanceof PlayerBlock){
+            this.#stateVal = 'block'
+            this.#spriteLength = this.sprites['block']['block'].length
+            this.spriteFrame %= this.sprites['block']['block'].length
+            ctx.drawImage(this.sprites['block']['block'][this.spriteFrame],this.x,this.y,this.width,this.height)
+        }else if(this.state instanceof PlayerSummon){
+            this.#stateVal = 'summon'
+            this.#spriteLength = this.sprites['summon']['summon'].length
+            this.spriteFrame %= this.sprites['summon']['summon'].length
+            ctx.drawImage(this.sprites['summon']['summon'][this.spriteFrame],this.x,this.y,this.width,this.height)
+        }else if(this.vx != 0 || this.vy != 0){
+            this.#stateVal = 'move'
+            if(this.facing ==='a'){
+                this.#spriteLength = this.sprites['move']['left'].length
+                this.spriteFrame %= this.sprites['move']['left'].length
+                ctx.drawImage(this.sprites['move']['left'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='d'){
+                this.#spriteLength = this.sprites['move']['right'].length
+                this.spriteFrame %= this.sprites['move']['right'].length
+                ctx.drawImage(this.sprites['move']['right'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='w'){
+                this.#spriteLength = this.sprites['move']['up'].length
+                this.spriteFrame %= this.sprites['move']['up'].length
+                ctx.drawImage(this.sprites['move']['up'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='s'){
+                this.#spriteLength = this.sprites['move']['down'].length
+                this.spriteFrame %= this.sprites['move']['down'].length
+                ctx.drawImage(this.sprites['move']['down'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }
+        }else{
+            this.#stateVal = 'idle'
+            if(this.facing ==='a'){
+                this.#spriteLength = this.sprites['idle']['left'].length
+                this.spriteFrame %= this.sprites['idle']['left'].length
+                ctx.drawImage(this.sprites['idle']['left'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='d'){
+                this.#spriteLength = this.sprites['idle']['right'].length
+                this.spriteFrame %= this.sprites['idle']['right'].length
+                ctx.drawImage(this.sprites['idle']['right'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='w'){
+                this.#spriteLength = this.sprites['idle']['up'].length
+                this.spriteFrame %= this.sprites['idle']['up'].length
+                ctx.drawImage(this.sprites['idle']['up'][this.spriteFrame],this.x,this.y,this.width,this.height)
+            }else if(this.facing ==='s'){
+                this.#spriteLength = this.sprites['idle']['down'].length
+                this.spriteFrame %= this.sprites['idle']['down'].length
+                ctx.drawImage(this.sprites['idle']['down'][this.spriteFrame],this.x,this.y,this.width,this.height)
             }
         }
-        ctx.fillStyle = 'gray'
 
-        if(this.facing ==='a'){
-            let atkX = this.x-this.atkW;
-            let atkY = this.y;
-            ctx.fillRect(atkX, atkY, this.atkW,this.atkH)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
-        }else if(this.facing ==='d'){
-            let atkX = this.x+this.width;
-            let atkY = this.y;
-            ctx.fillRect(atkX, atkY, this.atkW,this.atkH)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
+        this.#framesCounter += 1
 
-        }else if(this.facing ==='w'){
-            let atkX = this.x
-            let atkY = this.y-this.atkW
-            ctx.fillRect(atkX, atkY,this.atkH,this.atkW)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
+        if(this.#framesCounter % this.#framesHold === 0){
+            // if(this.#framesCurr < this.#framesMax - 1){
+            // this.#framesCurr+=1
 
-        }else if(this.facing ==='s'){
-            let atkX = this.x
-            let atkY = this.y+this.height
-            ctx.fillRect(atkX, atkY,this.atkH,this.atkW)
-            checkCollision(atkX,atkY,this.atkW,this.atkH)
+            if(this.#stateVal === 'move'){
+                // console.log(this.sprites[this.#stateVal]['up'].length)
+                this.spriteFrame = (this.spriteFrame + 1) % this.#spriteLength
+
+            }else{
+                this.spriteFrame = (this.spriteFrame + 1) % this.#spriteLength
+
+            }
+
+            // }
+        }
+
+        if(this.attacking === true) {
+            this.#attack_timer+=1
+            this.#framesElapsed ++;
+
+            if(this.#framesElapsed % this.#framesHold === 0){
+                // if(this.#framesCurr < this.#framesMax - 1){
+                this.#framesCurr+=1
+                // this.spriteFrame+=1
+                // this.spriteFrame = (this.spriteFrame + 1) % this.sprites[this.#stateVal].length
+
+                // }
+            }
+
+            // ctx is slash animation
+            let atkX, atkY,atkW = this.atkW, atkH = this.atkH
+            if(this.#framesCurr <= 1.1) return
+            if(this.facing ==='a'){
+                atkX = this.x-this.atkW;
+                atkY = this.y;
+                atkW = this.atkH
+                atkH = this.atkW
+                // ctx.drawImage(this.sprites['slash']['left'][0],atkX,atkY,atkH,atkW)
+            }else if(this.facing ==='d'){
+                atkX = this.x+this.width;
+                atkY = this.y;
+                atkW = this.atkH
+                atkH = this.atkW
+                // ctx.drawImage(this.sprites['slash']['right'][0],atkX,atkY,atkH,atkW)
+            }else if(this.facing ==='w'){
+                atkX = this.x
+                atkY = this.y-this.atkW
+                // ctx.drawImage(this.sprites['slash']['up'][0],atkX,atkY,atkH,atkW)
+            }else if(this.facing ==='s'){
+                atkX = this.x
+                atkY = this.y+this.height
+                // ctx.drawImage(this.sprites['slash']['down'][0],atkX,atkY,atkH,atkW)
+            }
+            this.checkCollision(atkX,atkY,atkW,atkH)
         }
 
     }
