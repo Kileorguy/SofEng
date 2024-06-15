@@ -157,25 +157,49 @@ input:checked + .slider:before {
 
 .popup .content {
   position: absolute;
-  top: 50%;
   top: 55%;
   left: 50%;
   font-family: 'Irish Grover';
-  transform: translate(-50%, -50%) scale(0);
-  background: #fff;
   background: rgba(255, 255, 255, 0.95);
   width: 55vw;
   height: 60vh;
   z-index: 2;
-  text-align: center;
-  padding: 20px;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 20;
   line-height: 30px;
   text-align: left;
-  padding: 50px;
+  padding-left: 245px;
+  padding-top: 65px;
   box-sizing: border-box;
+  user-select: none;
 }
+
+.popup .content h2:hover, .popup .content p:hover {
+  text-decoration: none;
+}
+
+.popup .content p img{
+  width: 35px;
+}
+
+#arrows{
+  width: 80px;
+  margin-right: 75px;
+  margin-left: 0px;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  margin-bottom: 13px;
+}
+
+.control img {
+  margin-right: 100px;
+  margin-left: 22px;
+  width: 35px;
+}
+
 
 nav div.play{
   /*padding-right: 2%;*/
@@ -286,7 +310,7 @@ div.kartun2 img, div.game1 img{
 div.kartun3{
   display: grid;
   align-items: center; 
-  grid-template-columns: 1.25fr 1.2fr 1fr;
+  grid-template-columns: 1.55fr 1.4fr 1fr;
   column-gap: 1.5%;
   background-color: white;
   font-family: 'Irish Grover';
@@ -306,6 +330,7 @@ div.game3{
 div.kartun3 img{
   float: right;
   width: 250px;
+  padding: 2%;
 }
 
 div.game3 img{
