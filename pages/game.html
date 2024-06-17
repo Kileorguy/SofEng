@@ -3,33 +3,27 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>Game</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link href='https://fonts.googleapis.com/css?family=Irish Grover' rel='stylesheet'>
     <link rel='stylesheet' type='text/css' media='screen' href='./css/game.css'>
 </head>
 <body>
-<!--<nav>-->
-<!--    <div class="leftNav">-->
-<!--        <p>HOME</p>-->
-<!--    </div>-->
-<!--    <div class="rightNav">-->
-<!--        <p>HOW TO PLAY</p>-->
-<!--        <p id="play">PLAY</p>-->
 
-<!--    </div>-->
-
-<!--</nav>-->
     <div class="outerGame">
         <canvas id="canvas" width=1920px height=960px></canvas>
     </div>
+
     <div id="outerResult">
-        <h1 id = "resultStatus"></h1>
+        <p><b>You have completed the game!</b></p>
+        <span>Input your username</span>
         <form id = "gameForm">
-            <label for="usernameField">Input your username</label>
-            <input type="text" name="" id="usernameField" placeholder="username" max="20" required>
-            <button type="submit">Submit</button>
+            <div class="username">
+                <input type="text" name="" id="usernameField" placeholder="username" max="20" required>
+            </div>
         </form>
+        <br>
+        <button type="submit">Submit</button>
     </div>
     <script type="module" src='./js/game.js'></script>
 </body>

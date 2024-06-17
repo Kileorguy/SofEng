@@ -31,8 +31,8 @@ export class WinState extends State{
 
     startState(){
         this.game.endTime = Date.now()
-        this.container.style.display = 'flex';
-        this.canvas.style.display = 'none';
+        this.container.style.display = 'block';
+        // this.canvas.style.display = 'none';
 
         const video = document.createElement('video');
         video.src = '../../assets/transitions/win/win_n2.mp4';
@@ -47,7 +47,7 @@ export class WinState extends State{
         video.style.objectFit = 'cover';
 
         video.addEventListener('ended', () => {
-            video.style.display = 'none';
+            // video.style.display = 'none';
         });
 
         document.body.appendChild(video);

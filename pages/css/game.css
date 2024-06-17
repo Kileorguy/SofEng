@@ -1,35 +1,8 @@
-nav{
-    height: 64px;
-    background-color: black;
+*{
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 24px;
 }
 
-*{
-}
-
-#play{
-    color: #DFB009;
-
-}
-
-.leftNav{
-    padding-left: 40px;
-}
-.rightNav{
-    display: flex;
-    padding-right: 30px;
-    gap: 30px;
-}
-
-nav p{
-    color: white;
-}
 
 body{
     width: 100vw;
@@ -59,23 +32,61 @@ body{
     justify-items: center;
 
 }
+
 #outerResult{
-    background-color: white;
-    z-index: 5;
+    background-color: black;
+    z-index: 1010;
     display: none;
     flex-direction: column;
-    align-items: center;
-    justify-items: center;
     width: 40%;
     height: 40%;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    font-family: 'Irish Grover';
     text-align: center;
-
+    border-radius: 8px;
 }
 
+#outerResult p, #outerResult span{
+    font-family: 'Irish Grover';
+    margin-top: 10%;
+    margin-bottom: 2%;
+    font-size: 20px;
+    color: white;
+}
+
+.username{
+    width: 30%;
+    padding-bottom: 5px;
+    border-bottom: 2px solid white;
+}
+
+#gameForm {
+    padding-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#gameForm input[type=text]{
+    border: none;
+    outline: none;
+    background-color: black;
+    color: white;
+    font-family: 'Irish Grover';
+}
+
+#outerResult button{
+    /* background-color: #009306; */
+    color: black;
+    border: none;
+    padding: 16px 32px;
+    text-decoration: none;
+    /* margin: 4px 2px; */
+    cursor: pointer;
+    border-radius: 20px;
+    font-family: 'Irish Grover';
+}
 
 
