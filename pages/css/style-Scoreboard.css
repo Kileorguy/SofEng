@@ -41,7 +41,7 @@ table.scoreboard {
 
 table.scoreboard tr th, table.scoreboard tr td{
     font-size: 22px;
-    text-align: left;
+    text-align: center;
     padding: 20px;
 }
 
@@ -66,6 +66,10 @@ table.global{
     padding-left: 13%;
 }
 
+.scoreboard{
+    text-align: center;
+}
+
 table.global tr th.glb {
     font-family: 'Irish Grover';
     color: white;
@@ -84,5 +88,6 @@ table.global tr td {
     font-family: 'Irish Grover';
     color: white;
     text-align: center;
+
     
 }

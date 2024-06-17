@@ -53,7 +53,7 @@ export class EnemyIdle extends State{
 
         let rand = Math.round(Math.random()*level)+1
 
-        // console.log(rand)
+        console.log(rand)
 
         if(rand===1){
             this.Enemy.state = new EnemyWalk(this.Enemy)

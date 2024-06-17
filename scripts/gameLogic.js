@@ -4,7 +4,11 @@ import {FactorySingleton} from "./singleton/allFactorySingleton.js";
 import {Laser} from "../model/laser.js";
 import {FirstGameState} from "./state/gameState/firstGameState.js";
 import {SpriteFacade} from "./facade/spriteFacade.js";
+import {LoseState} from "./state/gameState/loseState.js";
+import {SoundFacade} from "./facade/soundFacade.js";
 import {ThirdGameState} from "./state/gameState/thirdGameState.js";
+import {SecondGameState} from "./state/gameState/secondGameState.js";
+import {WinState} from "./state/gameState/winState.js";
 
 
 // script isi logic game (start game, dst)
@@ -18,6 +22,7 @@ export class Game {
     static level = 1
     ctx
     facade = new SpriteFacade()
+    sfacade = new SoundFacade()
 
 
 
@@ -30,13 +35,16 @@ export class Game {
     }
     constructor() {
         this.fact = FactorySingleton.getInstance()
+
         this.state = new FirstGameState(this)
+        // this.state = new LoseState(this)
 
     }
     fps
     fpsInterval
     then
     startTime
+    endTime
     elapsed
 
     magics = []
@@ -125,7 +133,13 @@ export class Game {
         this.elapsed = this.now - this.then
         if(this.elapsed > this.fpsInterval){
             this.then = this.now - (this.elapsed % this.fpsInterval)
-            clearCanvas(this.ctx)
+            if(this.state instanceof FirstGameState){
+                clearCanvas(this.ctx,this.facade.image['bg'])
+            }else if(this.state instanceof SecondGameState){
+                clearCanvas(this.ctx,this.facade.image['bg1'])
+            }else{
+                clearCanvas(this.ctx,this.facade.image['bg2'])
+            }
             this.drawHealth(this.ctx)
 
             // this.moveLogic()
@@ -136,14 +150,19 @@ export class Game {
         }
         this.animation = requestAnimationFrame(this.render.bind(this))
         if(this.enemy.HP <=0){
-            if (this.state instanceof ThirdGameState){
-                cancelAnimationFrame(this.animation)
-                clearCanvas(this.ctx)
-            }else{
-                this.state.changeState()
-                this.state.startState()
+            if (this.state instanceof WinState){
+                return;
             }
+                this.state.changeState()
         }
+        if (this.player.HP <= 0){
+            if(this.state instanceof LoseState){
+               return
+            }
+            this.state = new LoseState(this);
+            this.state.startState();
+        }
+
 
     }
 
