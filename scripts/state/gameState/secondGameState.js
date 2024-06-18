@@ -82,29 +82,24 @@ export class SecondGameState extends State{
         video.style.height = '100%';
         video.style.zIndex = '1000';
         video.style.objectFit = 'cover';
+        console.log(this.done)
 
         video.addEventListener('ended', () => {
-            this.game.mageCounter = 0
-            this.game.magics = []
-            this.game.monkeys = []
-            this.game.mages = []
-            this.game.circleLights = []
-
-
-
-
             let game = this.game
             this.moveLogic(game)
             game.player.drawSelf(game.ctx)
-
             video.style.display = 'none';
             this.done = true
-            this.game.player.removeEventListener()
-            this.game.player = null
-            this.game.player = f.playerFact.createEntity(Game.canvasWidth/2, Game.canvasHeight/4)
-            this.game.player.state.startState()
-        });
 
+        });
+        this.game.mageCounter = 0
+        this.game.magics = []
+        this.game.monkeys = []
+        this.game.mages = []
+        this.game.circleLights = []
+        this.game.player.HP = 100
+        this.game.player.x = Game.canvasWidth/2
+        this.game.player.y = Game.canvasHeight/4
         document.body.appendChild(video);
 
 
