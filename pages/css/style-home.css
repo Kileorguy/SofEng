@@ -335,7 +335,8 @@ div.kartun3 img{
 
 div.game3 img{
   float: left;
-  width: 250px;
+  width: 180px;
+  padding: 15px;
 }
 
 div.game3.desc3 {
