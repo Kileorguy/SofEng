@@ -130,7 +130,7 @@ input:checked + .slider:before {
 
 
 .popup .close-btn {
-  position: absolute;
+  /*position: absolute;*/
   right: 20px;
   top: 20px;
   width: 30px;
@@ -143,33 +143,60 @@ input:checked + .slider:before {
   text-align: center;
   border-radius: 50%;
   cursor: pointer;
+  align-self: flex-end;
+}
+.upperContent{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-right: 20px;
+  margin-left: 20px;
+}
+.upperContent h2{
+  font-size: 40px;
 }
 
+.content h2{
+  text-align: center;
+  margin-bottom: 25px;
+}
 
 .active {
   display: block;
 }
 
+.content{
+  display: flex;
+  flex-direction: column;
+  border: solid black 0.5px;
+}
+
 .popup.active .content {
-  transition: all 300ms ease-in-out;
+  transition: all 100ms ease-in-out;
   transform: translate(-50%, -50%) scale(1);
 }
 
 .popup .content {
   position: absolute;
-  top: 55%;
+  top: 50%;
   left: 50%;
   font-family: 'Irish Grover';
   background: rgba(255, 255, 255, 0.95);
-  width: 55vw;
-  height: 60vh;
+  border-radius: 10px;
+  width: 25vw;
+  height: 48vh;
   z-index: 2;
   font-size: 20px;
   font-weight: 20;
   line-height: 30px;
   text-align: left;
-  padding-left: 245px;
-  padding-top: 65px;
+  display: flex;
+  flex-direction: column;
+  /*padding-left: 245px;*/
+  /*padding-top: 65px;*/
+  padding: 25px;
   box-sizing: border-box;
   user-select: none;
 }
@@ -181,25 +208,51 @@ input:checked + .slider:before {
 .popup .content p img{
   width: 35px;
 }
-
-#arrows{
-  width: 80px;
-  margin-right: 75px;
-  margin-left: 0px;
+.control1{
+  display: flex;
+  margin-bottom: 13px;
+  margin-left: 3px;
+  align-items: center;
 }
 
+.control1 p{
+  width: 200px;
+  text-align: right;
+}
+#arrows{
+  width: 80px;
+  margin-right: 90px;
+  margin-left: 0px;
+
+}
+
+.controlContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
 .control {
   display: flex;
   align-items: center;
   margin-bottom: 13px;
+  margin-left: 30px;
+  font-size: 22px;
+}
+
+.control p{
+  width: 200px;
+  text-align: right;
+
 }
 
 .control img {
-  margin-right: 100px;
-  margin-left: 22px;
-  width: 35px;
+  width: 40px;
 }
 
+#moveArrow{
+  width: 90px;
+}
 
 nav div.play{
   /*padding-right: 2%;*/
