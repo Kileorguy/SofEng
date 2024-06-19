@@ -11,6 +11,7 @@ export class WinState extends State{
         this.game = game;
 
         this.form = document.getElementById("gameForm");
+        console.log(this.form)
         this.container = document.getElementById("outerResult");
         this.canvas = document.getElementById("canvas");
         this.statusText = document.getElementById("resultStatus");
@@ -34,6 +35,16 @@ export class WinState extends State{
         this.container.style.display = 'block';
         // this.canvas.style.display = 'none';
 
+
+        this.form.addEventListener('submit',(ev) => {
+            console.log("test")
+            ev.preventDefault();
+            this.inputPlayer().then(r =>{
+                window.location.href = './play.html';
+            } );
+
+        })
+
         const video = document.createElement('video');
         video.src = '../../assets/transitions/win/win_n2.mp4';
         video.controls = false;
@@ -52,14 +63,7 @@ export class WinState extends State{
 
         document.body.appendChild(video);
 
-        this.statusText.innerHTML ="CONGRATULATIONS, YOU HAVE DEFEATED THE BOSS"
-        this.form.addEventListener('submit',(ev) => {
-            ev.preventDefault();
-            this.inputPlayer().then(r =>{
-                window.location.href = './play.html';
-            } );
 
-        })
     }
 
 

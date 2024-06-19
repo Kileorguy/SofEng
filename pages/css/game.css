@@ -47,6 +47,10 @@ body{
     text-align: center;
     border-radius: 8px;
 }
+#gameForm{
+    display: flex;
+    flex-direction: column;
+}
 
 #outerResult p, #outerResult span{
     font-family: 'Irish Grover';
