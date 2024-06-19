@@ -32,7 +32,7 @@ export class LoseState extends State{
 
         document.body.appendChild(video);
 
-        this.container.style.display = 'flex';
+        // this.container.style.display = 'flex';
         this.canvas.style.display = 'none';
         this.form.style.display = 'none';
 
