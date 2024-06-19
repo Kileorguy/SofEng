@@ -13,7 +13,7 @@ async function getDatas(){
     const firebaseConfig = getConfig();
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const q = query(collection(db, 'scoreboard'), orderBy('time'), limit(3))
+    const q = query(collection(db, 'scoreboard'), orderBy('time'), limit(5))
     return await getDocs(q)
 }
 
