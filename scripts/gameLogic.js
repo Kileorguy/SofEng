@@ -37,7 +37,7 @@ export class Game {
         this.fact = FactorySingleton.getInstance()
 
         this.state = new FirstGameState(this)
-        // this.state = new WinState(this)
+        // this.state = new WinState(th is)
         // this.state = new LoseState(this)
 
     }
